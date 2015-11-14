@@ -20,6 +20,13 @@
         ons.ready(function() {
         });
     </script>
+
+    <style>
+    .label_area{
+        width: 30%;
+        overflow: hidden;
+    }
+    </style>
 </head>
 
 <body ng-controller="AppController">
@@ -71,7 +78,7 @@
 </ons-template>
 
 <ons-template id="entry_record.html">
-    <ons-page ng-controller="EntryController as entry">
+    <ons-page ng-controller="EntryController">
 
       <ons-toolbar>
         <div class="left"><ons-back-button>Back</ons-back-button></div>
@@ -90,21 +97,32 @@
         
         <ons-list modifier="inset">
 
+
+
             <ons-list-item>
                 <ons-row>
                     <ons-col>
                         <label for="input_bike">対象の機体</label>
                     </ons-col>
                     <ons-col>
-                        <!--
-                        <input type="text" ng-model="entry_bike" id="entry_bike" />
-                        -->
                         
-                        <ons-button id="entry_bike_select_button" ng-click="entry.showSelectListBike()">選択</ons-button>
-                        <span>{{entry.selectedBike}}</span>
+                        <ons-button id="entry_bike_select_button" ng-click="showSelectListBike()">選択</ons-button>
+                        <span>{{selected_bike}}</span>
                     
 
                     </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+            <ons-list-item>
+                <ons-row>
+                    <ons-col class="label_area">
+                        <label for="entry_title">タイトル</label>
+                    </ons-col>
+                    
+                    
+                        <input type="text" ng-model="entry_title" id="entry_title">
+
                 </ons-row>
             </ons-list-item>
 
@@ -114,12 +132,16 @@
                         <label for="input_d_bunrui">大分類</label>
                     </ons-col>
                     <ons-col>
-                        <ons-button id="entry_d_bunrui_select_button" ng-click="entry.showSelectListBike()">選択</ons-button>
-                        <span></span>
+                        <ons-button id="entry_d_bunrui_select_button" ng-click="showSelectListDBunrui()">選択</ons-button>
+                        <span>{{selected_d_bunrui}}</span>
                         
                     </ons-col>
                 </ons-row>
             </ons-list-item>
+
+
+
+            
         </ons-list>
     </ons-page>
 </ons-template>
@@ -127,7 +149,7 @@
 
 
 <ons-template id="list_select_page.html">
-    <ons-page ng-controller="SelectListController as selectList">
+    <ons-page ng-controller="SelectListController">
 
       <ons-toolbar>
         <div class="left"><ons-back-button>Back</ons-back-button></div>
@@ -137,7 +159,7 @@
         </div>
       </ons-toolbar>
 
-        <ons-list-item modifier="chevron" class="item" ng-repeat="item in selectList.items" ng-click="selectList.processItemSelect($index)">
+        <ons-list-item modifier="chevron" class="item" ng-repeat="item in items" ng-click="processItemSelect($index)">
             <ons-row>
                 <ons-col class="{{}}">
                     <p class="item-desc">{{item.key}}</p>

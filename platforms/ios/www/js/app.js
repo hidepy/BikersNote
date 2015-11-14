@@ -31,12 +31,18 @@
     });
 
 
-    module.controller('EntryController', function(selectList) {
+    module.controller('EntryController', function($scope, selectList) {
 
-        this.selectedBike = "GN125";
-        this.items = selectList.items;
+        $scope.selected_bike = "";
+        $scope.selected_d_bunrui =  "";
+        $scope.selected_c_bunrui = "";
+        $scope.entry_title = "";
+        $scope.entry_odd_meter = "";
+        $scope.entry_date = "";
+        $scope.entry_money = "";
+        $scope.entry_comment = "";
 
-        this.showSelectListBike = function(){
+        $scope.showSelectListBike = function(){
             
             selectList.removeAllItems();
 
@@ -45,19 +51,63 @@
             selectList.addItem("3", "SRX250");
             selectList.addItem("4", "VTR250");
 
-            myNavigator.pushPage('list_select_page.html', {});
-        }
+            myNavigator.pushPage('list_select_page.html', {title: "bike"});
+        };
+
+        $scope.showSelectListDBunrui = function(){
+
+            selectList.removeAllItems();
+
+            selectList.createItemsFromArr(["メンテナンス", "カスタム", "燃費"]);
+
+            myNavigator.pushPage("list_select_page.html", {title: "d_bunrui"});
+            
+        };
+
+        $scope.showSelectListCBunrui = function(){
+
+            selectList.removeAllItems();
+
+            selectList.createItemsFromArr(["オイル交換", "フォークオイル交換", "ブレーキフルード交換"]);
+
+            myNavigator.pushPage("list_select_page.html", {title: "c_bunrui"});
+            
+        };
+
+        $scope.$on("listSelected", function(e, param){
+
+            //$scope.selected_bike = item.value;
+
+            switch(param.parent_option.title){
+                case "bike":
+                    $scope.selected_bike = param.item.value;
+                    break;
+                case "d_bunrui":
+                    $scope.selected_d_bunrui = param.item.value;
+                    break;
+                case "c_bunrui":
+                    $scope.selected_c_bunrui = param.item.value;
+                    break;
+                default:
+                    console.log("return value missing...");
+            }
+        });
 
     });
 
-    module.controller("SelectListController", function(selectList){
-        
-        this.items = selectList.items;
+    module.controller("SelectListController", function($scope, $rootScope, selectList){
 
-        this.processItemSelect = function(index){
+        $scope.items = selectList.items;
+
+        $scope.processItemSelect = function(index){
+            var nav_options = myNavigator.getCurrentPage().options;
             var selectedItem = selectList.items[index];
             selectList.selectedItem = selectedItem;
             myNavigator.popPage();
+
+            // イベント通知
+            $rootScope.$broadcast("listSelected", {parent_option: nav_options, item: selectedItem});
+
         }
     });
 
@@ -90,15 +140,26 @@
         this.removeAllItems = function(){
             this.items.length = 0;
         };
-        this.createItemsFromObjectArr = function(objArr, key_name, key_value){
+        this.createItemsFromObjectArr = function(objArr, key_name, value_name){
+            /*
             objArr.forEach(function(val, idx, objArr){
-                this.addItem(val[key_name], val[key_value]);
+                this.addItem(val[key_name], val[value_name]);
             });
+            */
+            for(var i = 0; i < objArr.length; i++){
+                this.addItem(objArr[i][key_name], objArr[i][value_name]);
+            }
+
         };
         this.createItemsFromArr = function(arr){
+            /*
             arr.forEach(function(val, idx){
                 this.addItem(idx, val);
             });
+            */
+            for(var i = 0; i < arr.length; i++){
+                this.addItem("" + i, arr[i]);
+            }
         };
 
     });
