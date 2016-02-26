@@ -33,14 +33,66 @@
 
     module.controller('EntryController', function($scope, selectList) {
 
-        $scope.selected_bike = "";
-        $scope.selected_d_bunrui =  "";
-        $scope.selected_c_bunrui = "";
-        $scope.entry_title = "";
-        $scope.entry_odd_meter = "";
-        $scope.entry_date = "";
-        $scope.entry_money = "";
-        $scope.entry_comment = "";
+        console.log("in EntryController");
+
+        $scope.bike = "";
+        $scope.d_bunrui =  "";
+        $scope.c_bunrui = "";
+        $scope.title = "";
+        $scope.odd_meter = "";
+        $scope.date = "";
+        $scope.money = "";
+        $scope.comment = "";
+
+        var args = myNavigator.getCurrentPage().options;
+
+        //詳細ページから編集を押下してきた場合
+        if(args.is_modify){
+            var item = args.item;
+
+            //詳細情報をコピー
+            $scope.bike = item.bike;
+            $scope.d_bunrui = item.d_bunrui;
+            $scope.c_bunrui = item.c_bunrui;
+            $scope.title = item.title;
+            $scope.odd_meter = item.odd_meter;
+            $scope.date = item.date;
+            $scope.money = item.money;
+            $scope.comment = item.comment;
+        }
+
+
+        //登録処理
+        $scope.processEntryRecord = function(){
+            //ここでエラー判定処理
+
+            var id = formatDate(new Date());
+
+            var msg = "";
+
+            var record = {
+                id: id,
+                d_bunrui: $scope.d_bunrui,
+                c_bunrui: $scope.c_bunrui,
+                title: $scope.title,
+                odd_meter: $scope.odd_meter,
+                date: $scope.date,
+                money: $scope.money,
+                comment: $scope.comment
+            };
+
+            //レコードを1件格納
+            if(storageManager.saveItem(id, record)){
+                msg = "success to save!!";
+
+                myNavigator.popPage(); //前画面へ
+            }
+            else{
+                msg = "failed to save....";
+            }
+
+            showAlert(msg);
+        }
 
         $scope.showSelectListBike = function(){
             
@@ -80,13 +132,13 @@
 
             switch(param.parent_option.title){
                 case "bike":
-                    $scope.selected_bike = param.item.value;
+                    $scope.bike = param.item.value;
                     break;
                 case "d_bunrui":
-                    $scope.selected_d_bunrui = param.item.value;
+                    $scope.d_bunrui = param.item.value;
                     break;
                 case "c_bunrui":
-                    $scope.selected_c_bunrui = param.item.value;
+                    $scope.c_bunrui = param.item.value;
                     break;
                 default:
                     console.log("return value missing...");
@@ -169,6 +221,57 @@
     });
 
 
+    module.controller("ViewRecordHeaderConrtoller", function($scope){
+
+        //整備情報レコード
+        $scope.items = (function(){ //とりあえずbikeで絞り込んだ結果を返すようにしよう
+            storageManager.getAllItem(); 
+        })();
+
+
+        $scope.processItemSelect = function(index){
+            console.log("item tapped!!");
+
+            myNavigator.pushPage('view_record_detail_page.html', {item : $scope.items[index]});
+
+        };
+
+
+
+    });
+
+
+    module.controller("ViewRecordDetailConrtoller", function($scope){
+
+        console.log("in ViewRecordDetailConrtoller");
+
+        var args = myNavigator.getCurrentPage().options;
+
+        $scope.item = args.item; //整備情報を取得(前画面からの情報まんまでよいか？)
+
+        $scope.movetoUpdate = function(index){
+            console.log("item tapped!!");
+
+            myNavigator.pushPage('entry_record.html', {item : $scope.items[index], is_modify: true});
+
+        };
+
+        $scope.processItemDelete = function(){
+            console.log("ここで削除時の動作をしますよ！");
+        };     
+
+
+    });
+
+
+
+
+
+
+
+
+
+
     module.controller('DetailController', function($scope, $data) {
         $scope.item = $data.selectedItem;
     });
@@ -205,32 +308,6 @@
 
 
 
-
-    /*
-    module.controller('EntryController', function($scope) {
-
-        ons.createPopover('entry_select_list_bike.html').then(function(popover) {
-            $scope.popover_bike = popover;
-        });
-
-        ons.createPopover('entry_select_list_d_bunrui.html').then(function(popover) {
-            $scope.popover_d_bunrui = popover;
-        });
-
-        $scope.show_select_list_bike = function(e) {
-            $scope.popover_bike.show(e);
-        };
-
-        $scope.show_select_list_d_bunrui = function(e) {
-            $scope.popover_d_bunrui.show(e);
-        };
-
-        $scope.select_bike = function(){
-            console.log("in select_bike");
-        }
-
-    });
-*/
 
 
 

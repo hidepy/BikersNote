@@ -14,10 +14,14 @@
     <script src="lib/onsen/js/angular/angular.js"></script>
     <script src="lib/onsen/js/onsenui.js"></script>
 
+    <script src="js/commonFunctions.js"></script>
+    <script src="js/storageManager.js"></script>
+
     <script src="cordova.js"></script>
     <script src="js/app.js"></script>
     <script>
         ons.ready(function() {
+            window.storageManager = new StorageManager();
         });
     </script>
 
@@ -47,7 +51,6 @@
           <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
         </div>
       </ons-toolbar>
-    
 
       <div class="profile-card">
         <img src="images/profile-image-01.png" class="profile-image">
@@ -84,20 +87,8 @@
         <div class="left"><ons-back-button>Back</ons-back-button></div>
         <div class="center">Add Record</div>
       </ons-toolbar>
-
-        <!--
-            bike: 
-            d_bunrui: 
-            c_bunrui: 
-            sub_title: 
-            kingaku: 
-            date: 
-            comment: 
-        -->
         
         <ons-list modifier="inset">
-
-
 
             <ons-list-item>
                 <ons-row>
@@ -107,7 +98,7 @@
                     <ons-col>
                         
                         <ons-button id="entry_bike_select_button" ng-click="showSelectListBike()">選択</ons-button>
-                        <span>{{selected_bike}}</span>
+                        <span>{{bike}}</span>
                     
 
                     </ons-col>
@@ -120,8 +111,7 @@
                         <label for="entry_title">タイトル</label>
                     </ons-col>
                     
-                    
-                        <input type="text" ng-model="entry_title" id="entry_title">
+                        <input type="text" ng-model="title" id="entry_title">
 
                 </ons-row>
             </ons-list-item>
@@ -133,21 +123,109 @@
                     </ons-col>
                     <ons-col>
                         <ons-button id="entry_d_bunrui_select_button" ng-click="showSelectListDBunrui()">選択</ons-button>
-                        <span>{{selected_d_bunrui}}</span>
+                        <span>{{d_bunrui}}</span>
                         
                     </ons-col>
                 </ons-row>
             </ons-list-item>
-
-
-
-            
+  
         </ons-list>
+
+    <ons-button ng-click="processEntryRecord()">登録</ons-button>
+
     </ons-page>
 </ons-template>
 
 
 
+
+<!-- 整備情報詳細ページ(読専) -->
+<ons-template id="view_record_detail_page.html">
+    <ons-page ng-controller="ViewRecordDetailConrtoller">
+
+      <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">View Record Detail</div>
+      </ons-toolbar>
+        
+        <ons-list modifier="inset">
+
+            <ons-list-item>
+                <ons-row>
+                    
+                    <span>{{title}}</span>
+                    <span>{{id}}</span>
+
+                </ons-row>
+            </ons-list-item>
+
+    <ons-button ng-click="movetoUpdate()">編集</ons-button>
+    <ons-button ng-click="processItemDelete()">削除</ons-button>
+
+    </ons-page>
+</ons-template>
+
+
+<!-- 整備情報一覧ページ -->
+<!--
+
+要件：
+・最初にページを表示した場合、現在設定されているバイク情報に紐づく整備情報を時系列順で取得する
+
+・検索設定ボタンを押下することで、他の機体、分類ごとなどに検索ができる
+
+・リスト項目押下でメンテナンス詳細ページに遷移する
+
+-->
+<ons-template id="view_record_header_page.html">
+    <ons-page ng-controller="ViewRecordHeaderController">
+
+      <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">Select</div>
+        <div class="right">
+          <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
+        </div>
+      </ons-toolbar>
+
+        <ons-list-item modifier="chevron" class="item" ng-repeat="item in items" ng-click="processItemSelect($index)">
+            <ons-row>
+                <ons-col class="{{}}">
+                    <p class="item-desc">{{item.id}}</p>
+                </ons-col>
+                <ons-col class="{{}}">
+                    <p class="item-desc">{{item.bike}}</p>
+                </ons-col>
+                <ons-col class="{{}}">
+                    <p class="item-desc">{{item.title}}</p>
+                </ons-col>
+                <ons-col class="{{}}">
+                    <p class="item-desc">{{item.d_bunrui}}</p>
+                </ons-col>
+                <ons-col class="{{}}">
+                    <p class="item-desc">{{item.c_bunrui}}</p>
+                </ons-col>
+                <ons-col class="{{}}">
+                    <p class="item-desc">{{item.odd_meter}}</p>
+                </ons-col>
+                <ons-col class="{{}}">
+                    <p class="item-desc">{{item.date}}</p>
+                </ons-col>
+                <ons-col class="{{}}">
+                    <p class="item-desc">{{item.money}}</p>
+                </ons-col>
+                <ons-col class="{{}}">
+                    <p class="item-desc">{{item.comment}}</p>
+                </ons-col>
+            </ons-row>
+        </ons-list-item>
+
+    </ons-page>
+</ons-template>
+
+
+
+<!-- 汎用選択リストページ -->
 <ons-template id="list_select_page.html">
     <ons-page ng-controller="SelectListController">
 
