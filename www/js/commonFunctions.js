@@ -55,7 +55,7 @@ function isEmpty(str){
 /* アラートを表示 */
 function showAlert(str){
 
-	var platform = window.device.platform;
+	var platform = (window.device) ? window.device.platform : "";
 
 	if(!isEmpty(str) && platform.match(/iPhone/)){
 		ons.notification.alert({

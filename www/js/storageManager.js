@@ -28,6 +28,9 @@ StorageManager.prototype.convStorage2Hash = function(){
 StorageManager.prototype.getAllItem = function(){
 	return this.maintainance_records;
 }
+StorageManager.prototype.getAllItemArray = function(){
+	return convHash2Arr(this.maintainance_records);
+}
 /* とある1件のみ取得 */
 StorageManager.prototype.getDetailItem = function(key){
 	return this.maintainance_records[key];

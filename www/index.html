@@ -42,39 +42,37 @@
 <ons-template id="home.html">
     <ons-page ng-controller="HomeController as home">
     
-      <ons-toolbar>
-        <!--
-        <div class="left"><ons-back-button>Back</ons-back-button></div>
-        -->
-        <div class="center">Profile</div>
-        <div class="right">
-          <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
+        <ons-toolbar>
+            <div class="center">Profile</div>
+            <div class="right">
+                <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
+            </div>
+        </ons-toolbar>
+
+        <div class="profile-card">
+            <img src="images/profile-image-01.png" class="profile-image">
+            <div class="profile-name">{{home.data.name}}</div>
+            <div class="profile-desc">{{home.data.comment}}</div>
+            <div class="profile-purcase_date">{{home.data.purchace_date}}</div>
         </div>
-      </ons-toolbar>
-
-      <div class="profile-card">
-        <img src="images/profile-image-01.png" class="profile-image">
-        <div class="profile-name">{{home.data.name}}</div>
-        <div class="profile-desc">{{home.data.comment}}</div>
-        <div class="profile-purcase_date">{{home.data.purchace_date}}</div>
-      </div>
      
-      <ons-list>
-        <ons-list-item>
-          <ons-row>
-            <ons-col class="info-col">
-              <div class="info-num">{{home.data.maintainance_records}}</div>
-              <div class="info-unit">Maintainance</div>
-            </ons-col>
-            <ons-col class="info-col">
-              <div class="info-num">{{home.data.touring_records}}</div>
-              <div class="info-unit">Tourings</div>
-            </ons-col>
-          </ons-row>
-        </ons-list-item>
-      </ons-list>
+        <ons-list>
+            <ons-list-item>
+                <ons-row>
+                    <ons-col class="info-col">
+                        <div class="info-num">{{home.data.maintainance_records}}</div>
+                        <div class="info-unit">Maintainance</div>
+                    </ons-col>
+                    <ons-col class="info-col">
+                        <div class="info-num">{{home.data.touring_records}}</div>
+                        <div class="info-unit">Tourings</div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+        </ons-list>
 
-    <ons-button onclick="myNavigator.pushPage('entry_record.html')">Next Page</ons-button>
+        <ons-button onclick="myNavigator.pushPage('entry_record.html')">Next Page</ons-button>
+        <ons-button ng-click="home.movetoViewRecordHeader()">照会</ons-button>
 
 
     </ons-page>
@@ -111,7 +109,7 @@
                         <label for="entry_title">タイトル</label>
                     </ons-col>
                     
-                        <input type="text" ng-model="title" id="entry_title">
+                    <input type="text" ng-model="title" id="entry_title">
 
                 </ons-row>
             </ons-list-item>
@@ -131,40 +129,10 @@
   
         </ons-list>
 
-    <ons-button ng-click="processEntryRecord()">登録</ons-button>
+    <ons-button ng-click="processEntryRecord()">{{UPDATE_BUTTON_NAME}}</ons-button>
 
     </ons-page>
 </ons-template>
-
-
-
-
-<!-- 整備情報詳細ページ(読専) -->
-<ons-template id="view_record_detail_page.html">
-    <ons-page ng-controller="ViewRecordDetailConrtoller">
-
-      <ons-toolbar>
-        <div class="left"><ons-back-button>Back</ons-back-button></div>
-        <div class="center">View Record Detail</div>
-      </ons-toolbar>
-        
-        <ons-list modifier="inset">
-
-            <ons-list-item>
-                <ons-row>
-                    
-                    <span>{{title}}</span>
-                    <span>{{id}}</span>
-
-                </ons-row>
-            </ons-list-item>
-
-    <ons-button ng-click="movetoUpdate()">編集</ons-button>
-    <ons-button ng-click="processItemDelete()">削除</ons-button>
-
-    </ons-page>
-</ons-template>
-
 
 <!-- 整備情報一覧ページ -->
 <!--
@@ -180,15 +148,15 @@
 <ons-template id="view_record_header_page.html">
     <ons-page ng-controller="ViewRecordHeaderController">
 
-      <ons-toolbar>
-        <div class="left"><ons-back-button>Back</ons-back-button></div>
-        <div class="center">Select</div>
-        <div class="right">
-          <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
-        </div>
-      </ons-toolbar>
+        <ons-toolbar>
+            <div class="left"><ons-back-button>Back</ons-back-button></div>
+            <div class="center">レコード一覧</div>
+            <div class="right">
+            <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
+            </div>
+        </ons-toolbar>
 
-        <ons-list-item modifier="chevron" class="item" ng-repeat="item in items" ng-click="processItemSelect($index)">
+        <ons-list-item modifier="chevron" class="item" ng-repeat="item in items" ng-click="processItemSelect($index, $event)">
             <ons-row>
                 <ons-col class="{{}}">
                     <p class="item-desc">{{item.id}}</p>
@@ -223,7 +191,43 @@
     </ons-page>
 </ons-template>
 
+<!-- 整備情報詳細ページ(読専) -->
+<ons-template id="view_record_detail_page.html">
+    <ons-page ng-controller="ViewRecordDetailConrtoller">
 
+        <ons-toolbar>
+            <div class="left"><ons-back-button>Back</ons-back-button></div>
+            <div class="center">View Record Detail</div>
+        </ons-toolbar>
+        
+        <ons-list>
+            <ons-list-item>
+                <ons-row>
+                    <ons-col>
+                    id
+                    </ons-col>
+                    <ons-col>
+                    {{item.id}}
+                    </ons-col>
+                </ons-row>
+                </ons-list-item>
+                <ons-list-item>
+                <ons-row>
+                    <ons-col>
+                    title
+                    </ons-col>
+                    <ons-col>
+                    {{item.title}}
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+        </ons-list>
+
+        <ons-button ng-click="movetoUpdate()">編集</ons-button>
+        <ons-button ng-click="processItemDelete()">削除</ons-button>
+
+    </ons-page>
+</ons-template>
 
 <!-- 汎用選択リストページ -->
 <ons-template id="list_select_page.html">

@@ -28,6 +28,11 @@
 
         this.visibility = {};
         this.visibility.dbg_disp_area = "inline";
+
+        this.movetoViewRecordHeader = function(){
+            console.log("in movetoViewRecordHeader");
+            myNavigator.pushPage("view_record_header_page.html");
+        };
     });
 
 
@@ -44,6 +49,8 @@
         $scope.money = "";
         $scope.comment = "";
 
+        $scope.UPDATE_BUTTON_NAME = "登録";
+
         var args = myNavigator.getCurrentPage().options;
 
         //詳細ページから編集を押下してきた場合
@@ -59,6 +66,8 @@
             $scope.date = item.date;
             $scope.money = item.money;
             $scope.comment = item.comment;
+
+            $scope.UPDATE_BUTTON_NAME = "更新";
         }
 
 
@@ -72,6 +81,7 @@
 
             var record = {
                 id: id,
+                bike: $scope.bike,
                 d_bunrui: $scope.d_bunrui,
                 c_bunrui: $scope.c_bunrui,
                 title: $scope.title,
@@ -221,23 +231,27 @@
     });
 
 
-    module.controller("ViewRecordHeaderConrtoller", function($scope){
+    module.controller("ViewRecordHeaderController", function($scope){
 
         //整備情報レコード
-        $scope.items = (function(){ //とりあえずbikeで絞り込んだ結果を返すようにしよう
-            storageManager.getAllItem(); 
-        })();
+        $scope.items = storageManager.getAllItemArray(); 
 
+        console.log("in ViewRecordHeaderController");
+        console.log($scope.items);
 
-        $scope.processItemSelect = function(index){
-            console.log("item tapped!!");
+        $scope.processItemSelect = function(index, event){
+            console.log("item tapped!! send item is:");
+
+            console.log($scope.items[index]);
+
+            console.log("event is:");
+            console.log(event);
+
+            console.log("index is: " + index);
 
             myNavigator.pushPage('view_record_detail_page.html', {item : $scope.items[index]});
 
         };
-
-
-
     });
 
 
@@ -249,10 +263,12 @@
 
         $scope.item = args.item; //整備情報を取得(前画面からの情報まんまでよいか？)
 
-        $scope.movetoUpdate = function(index){
+        console.log($scope.item);
+
+        $scope.movetoUpdate = function(){
             console.log("item tapped!!");
 
-            myNavigator.pushPage('entry_record.html', {item : $scope.items[index], is_modify: true});
+            myNavigator.pushPage('entry_record.html', {item : $scope.item, is_modify: true});
 
         };
 
