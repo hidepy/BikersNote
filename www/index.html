@@ -1,6 +1,48 @@
 <!doctype html>
 <html lang="en" ng-app="app">
 <head>
+
+<!--
+  $on
+    scope.$on('eventname', function(event, args) {
+  ...
+  });
+  イベントリスナが発生した場合に駆動する
+
+
+
+  $emit
+  scope.$emit('eventname', args);
+  親方向にイベント通知を行う
+
+
+  $broadcast
+  scope.$broadcast('eventname', args);
+  子方向にイベント通知を行う
+    全体にbroadcastしたいなら、$scope.rootScope.broadcast...しないと
+
+
+  lazy image loader
+  https://github.com/GeneralElectric/winchjs
+
+
+  wikiの本文にメモを追加できる。自分の
+    必要な所だけ抽出してコピペしておけば、勉強の助けに
+
+
+  glot, jqplotなどがチャート
+
+  d3 on angular
+  http://www.ng-newsletter.com/posts/d3-on-angular.html
+
+
+
+
+  angularのthisとscopeの争い
+  http://qiita.com/Quramy/items/e55ba394031794236fc9
+
+-->
+
     <meta charset="utf-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -21,7 +63,7 @@
     <script src="js/app.js"></script>
     <script>
         ons.ready(function() {
-            window.storageManager = new StorageManager();
+            //window.storageManager = new StorageManager();
         });
     </script>
 
@@ -33,15 +75,28 @@
     </style>
 </head>
 
-<body ng-controller="AppController">
+<body ng-controller="RootController">
 
-<ons-navigator var="myNavigator" page="home.html">
+<ons-tabbar hide-tabs="sharing.hide_tabbar" var="myTabbar">
+  <ons-tab page="index.html" label="Home" icon="ion-ios-home" active="true"></ons-tab>
+  <ons-tab page="view_record_wrapper.html" label="Collection" icon="ion-ios-book"></ons-tab>
+  <ons-tab page="entry_record_wrapper.html" label="Record" icon="ion-edit"></ons-tab>
+  <!--<ons-tab page="settings.html" label="Settings" icon="ion-ios-cog"></ons-tab>-->
+</ons-tabbar>
 
-</ons-navigator>
+<ons-template id="index.html">
+  <ons-navigator var="myNavigator" page="home.html"></ons-navigator>
+</ons-template>
+<ons-template id="view_record_wrapper.html">
+  <ons-navigator var="myNavigator" page="view_record_header_page.html"></ons-navigator>
+</ons-template>
+<ons-template id="entry_record_wrapper.html">
+  <ons-navigator var="myNavigator" page="entry_record.html"></ons-navigator>
+</ons-template>
 
 <ons-template id="home.html">
-    <ons-page ng-controller="HomeController as home">
-    
+    <ons-page ng-controller="HomeController">
+
         <ons-toolbar>
             <div class="center">Profile</div>
             <div class="right">
@@ -49,31 +104,33 @@
             </div>
         </ons-toolbar>
 
+<!--
         <div class="profile-card">
             <img src="images/profile-image-01.png" class="profile-image">
             <div class="profile-name">{{home.data.name}}</div>
             <div class="profile-desc">{{home.data.comment}}</div>
             <div class="profile-purcase_date">{{home.data.purchace_date}}</div>
         </div>
-     
+-->
         <ons-list>
             <ons-list-item>
                 <ons-row>
                     <ons-col class="info-col">
-                        <div class="info-num">{{home.data.maintainance_records}}</div>
+                        <div class="info-num">{{data.maintainance_records}}</div>
                         <div class="info-unit">Maintainance</div>
                     </ons-col>
                     <ons-col class="info-col">
-                        <div class="info-num">{{home.data.touring_records}}</div>
+                        <div class="info-num">{{data.touring_records}}</div>
                         <div class="info-unit">Tourings</div>
                     </ons-col>
                 </ons-row>
             </ons-list-item>
         </ons-list>
 
-        <ons-button onclick="myNavigator.pushPage('entry_record.html')">Next Page</ons-button>
-        <ons-button ng-click="home.movetoViewRecordHeader()">照会</ons-button>
+        <ons-button ng-click='myTabbar.setTabbarVisibility(false)'>test</ons-button>
 
+        <ons-button onclick="myNavigator.pushPage('entry_record.html')">Next Page</ons-button>
+        <ons-button ng-click="movetoViewRecordHeader()">view</ons-button>
 
     </ons-page>
 </ons-template>
@@ -85,19 +142,19 @@
         <div class="left"><ons-back-button>Back</ons-back-button></div>
         <div class="center">Add Record</div>
       </ons-toolbar>
-        
+
         <ons-list modifier="inset">
 
             <ons-list-item>
                 <ons-row>
                     <ons-col>
-                        <label for="input_bike">対象の機体</label>
+                        <label for="input_bike">machine</label>
                     </ons-col>
                     <ons-col>
-                        
-                        <ons-button id="entry_bike_select_button" ng-click="showSelectListBike()">選択</ons-button>
+
+                        <ons-button id="entry_bike_select_button" ng-click="showSelectListBike()">select</ons-button>
                         <span>{{bike}}</span>
-                    
+
 
                     </ons-col>
                 </ons-row>
@@ -106,9 +163,9 @@
             <ons-list-item>
                 <ons-row>
                     <ons-col class="label_area">
-                        <label for="entry_title">タイトル</label>
+                        <label for="entry_title">title</label>
                     </ons-col>
-                    
+
                     <input type="text" ng-model="title" id="entry_title">
 
                 </ons-row>
@@ -122,11 +179,11 @@
                     <ons-col>
                         <ons-button id="entry_d_bunrui_select_button" ng-click="showSelectListDBunrui()">選択</ons-button>
                         <span>{{d_bunrui}}</span>
-                        
+
                     </ons-col>
                 </ons-row>
             </ons-list-item>
-  
+
         </ons-list>
 
     <ons-button ng-click="processEntryRecord()">{{UPDATE_BUTTON_NAME}}</ons-button>
@@ -150,7 +207,7 @@
 
         <ons-toolbar>
             <div class="left"><ons-back-button>Back</ons-back-button></div>
-            <div class="center">レコード一覧</div>
+            <div class="center">records</div>
             <div class="right">
             <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
             </div>
@@ -199,7 +256,7 @@
             <div class="left"><ons-back-button>Back</ons-back-button></div>
             <div class="center">View Record Detail</div>
         </ons-toolbar>
-        
+
         <ons-list>
             <ons-list-item>
                 <ons-row>
@@ -223,13 +280,17 @@
             </ons-list-item>
         </ons-list>
 
-        <ons-button ng-click="movetoUpdate()">編集</ons-button>
-        <ons-button ng-click="processItemDelete()">削除</ons-button>
+        <ons-button ng-click="movetoUpdate()">modify</ons-button>
+        <ons-button ng-click="processItemDelete()">delete</ons-button>
 
     </ons-page>
 </ons-template>
 
+
+
+
 <!-- 汎用選択リストページ -->
+<!--
 <ons-template id="list_select_page.html">
     <ons-page ng-controller="SelectListController">
 
@@ -254,6 +315,7 @@
 
     </ons-page>
 </ons-template>
+-->
 
 </body>
 </html>
