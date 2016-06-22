@@ -1,11 +1,28 @@
 /// <reference path="../../tsd/cordova/cordova.d.ts"/>
+/* 実機上でもobjectのログを安全に吐く */
+function outlog(v) {
+    if (typeof v === "object") {
+        if (!isDevice()) {
+            console.log(v);
+        }
+    }
+    else {
+        console.log(v);
+    }
+}
 /* デバイス上実行か確認 */
 function isDevice() {
     return (window && window.device);
 }
 /* 時間を文字列に変換 */
-function formatDate(date) {
-    return ("" + date.getFullYear() + ("00" + (date.getMonth() + 1)).slice(-2) + ("00" + date.getDate()).slice(-2) + ("00" + date.getHours()).slice(-2) + ("00" + date.getMinutes()).slice(-2) + ("00" + date.getSeconds()).slice(-2));
+function formatDate(date, onlyYMD, withSlash) {
+    var delimited_char = withSlash ? "/" : "";
+    var ymd_hms_separator = withSlash ? " " : "";
+    var date_string = ("" + date.getFullYear() + delimited_char + ("00" + (date.getMonth() + 1)).slice(-2) + delimited_char + ("00" + date.getDate()).slice(-2));
+    if (!onlyYMD) {
+        date_string += "" + ymd_hms_separator + ("00" + date.getHours()).slice(-2) + delimited_char + ("00" + date.getMinutes()).slice(-2) + delimited_char + ("00" + date.getSeconds()).slice(-2);
+    }
+    return date_string;
 }
 /* JSONをクエリリクエストストリングに変換 */
 function convJSON2QueryString(data) {

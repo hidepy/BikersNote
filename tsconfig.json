@@ -34,6 +34,10 @@
   "files": [
     "./www/js/app.ts",
     "./www/js/commonFunctions.ts",
+    "./www/js/constants.ts",
+    "./www/js/MaintainanceRecord.ts",
+    "./www/js/selectListController.ts",
+    "./www/js/settingsController.ts",
     "./www/js/storageManager.ts",
     "./tsd/angular/angular-1.4.d.ts",
     "./tsd/cordova/cordova.d.ts",
@@ -59,6 +63,7 @@
     "./tsd/cordova/plugins/Vibration.d.ts",
     "./tsd/cordova/plugins/WebSQL.d.ts",
     "./tsd/jquery/jquery.d.ts",
+    "./tsd/MaintainanceRecord.d.ts",
     "./tsd/onsen/onsenui.d.ts",
     "./tsd/StorageManager.d.ts"
   ],

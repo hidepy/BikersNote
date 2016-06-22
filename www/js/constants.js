@@ -1,0 +1,54 @@
+/*
+  定数定義
+*/
+//module APP_CONFIGS{
+var APP_CONFIGS;
+(function (APP_CONFIGS) {
+    APP_CONFIGS.NAME = "app";
+})(APP_CONFIGS || (APP_CONFIGS = {}));
+var VIEW_LABELS;
+(function (VIEW_LABELS) {
+    VIEW_LABELS.ENTRY_BUTTON = "登録";
+    VIEW_LABELS.UPDATE_BUTTON = "更新";
+    //各ページタイトル
+    VIEW_LABELS.TITLE_HOME = "home";
+    VIEW_LABELS.TITLE_ENTRY = "entry";
+    VIEW_LABELS.TITLE_MODIFY = "modify";
+    VIEW_LABELS.TITLE_HEADERS = "headers";
+    VIEW_LABELS.TITLE_DETAIL = "detail";
+    VIEW_LABELS.TITLE_SETTINGS = "settings";
+    // 共通で使用するラベル文字列
+    VIEW_LABELS.MACHINE = "対象の機体";
+    VIEW_LABELS.TITLE = "タイトル";
+    VIEW_LABELS.D_BUNRUI = "大分類";
+    VIEW_LABELS.C_BUNRUI = "中分類";
+    VIEW_LABELS.ODD_METER = "現在の走行距離";
+    VIEW_LABELS.DONE_DATE = "日付";
+    VIEW_LABELS.MONEY = "費用";
+    VIEW_LABELS.COMMENT = "コメント";
+    VIEW_LABELS.OPTIONAL1_DEFAULT = "備考1";
+    VIEW_LABELS.OPTIONAL2_DEFAULT = "備考2";
+    VIEW_LABELS.OPTIONAL3_DEFAULT = "備考3";
+})(VIEW_LABELS || (VIEW_LABELS = {}));
+// マスタ専用 数が増える見込みなので
+var VIEW_LABELS_MASTER;
+(function (VIEW_LABELS_MASTER) {
+    //設定マスタヘッダタイトル
+    VIEW_LABELS_MASTER.MSTR_MACHINE_VIEW = "機体一覧";
+    VIEW_LABELS_MASTER.MSTR_BUNRUI_VIEW = "分類一覧";
+})(VIEW_LABELS_MASTER || (VIEW_LABELS_MASTER = {}));
+var SELECT_LIST_TYPES;
+(function (SELECT_LIST_TYPES) {
+    SELECT_LIST_TYPES.MY_MACHINES = "bike";
+    SELECT_LIST_TYPES.D_BUNRUI = "d_bunrui";
+    SELECT_LIST_TYPES.C_BUNRUI = "c_bunrui";
+})(SELECT_LIST_TYPES || (SELECT_LIST_TYPES = {}));
+var CONST_MESSAGES;
+(function (CONST_MESSAGES) {
+    CONST_MESSAGES.ENTRY_SUCCESS = "登録しました";
+    CONST_MESSAGES.ENTRY_FAILURE = "登録に失敗しました...";
+    CONST_MESSAGES.UPDATE_SUCCESS = "修正しました";
+    CONST_MESSAGES.UPDATE_FAILURE = "修正に失敗しました...";
+    CONST_MESSAGES.DELETE_SUCCESS = "削除しました";
+    CONST_MESSAGES.DELETE_FAILURE = "削除に失敗しました...";
+})(CONST_MESSAGES || (CONST_MESSAGES = {}));

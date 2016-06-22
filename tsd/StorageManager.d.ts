@@ -25,7 +25,7 @@ interface StorageManager {
      * @param {String} オブジェクトのキー
      * @description storage内でkeyに一致するオブジェクトを削除する
      */
-    deleteItem(key: string): void;
+    deleteItem(key: string): boolean;
 
     /**
      * @param {stringArray} オブジェクトのキー配列
@@ -43,7 +43,7 @@ interface StorageManager {
      * @param {any} オブジェクトのデータ
      * @description storageにオブジェクトを1件保存する
      */
-    saveItem2Storage(key: string, data: any): void;
+    saveItem2Storage(key: string, data: any): boolean;
 
     /**
      * @param {String} オブジェクトのキー

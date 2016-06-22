@@ -67,8 +67,16 @@ var StorageManager = function (storage_key_name) {
         return _items[key];
     };
     proto.deleteItem = function (key) {
-        delete _items[key];
-        window.localStorage.setItem(this.storage_key_name, JSON.stringify(_items));
+        try {
+            delete _items[key];
+            window.localStorage.setItem(this.storage_key_name, JSON.stringify(_items));
+            return true;
+        }
+        catch (e) {
+            outlog("error occured... in storageManager#deleteItem");
+            outlog(e);
+            return false;
+        }
     };
     proto.deleteItems = function (keys) {
         if (keys && keys.length && (keys.length > 0)) {
@@ -79,8 +87,16 @@ var StorageManager = function (storage_key_name) {
         window.localStorage.setItem(_storage_key_name, JSON.stringify(_items));
     };
     proto.saveItem2Storage = function (key, data) {
-        _items[key] = data;
-        window.localStorage.setItem(_storage_key_name, JSON.stringify(_items));
+        try {
+            _items[key] = data;
+            window.localStorage.setItem(_storage_key_name, JSON.stringify(_items));
+            return true;
+        }
+        catch (e) {
+            outlog("error occured... in storageManager#saveItem2Storage");
+            outlog(e);
+            return false;
+        }
     };
     proto.sortByKey = function (key, desc) {
     };
