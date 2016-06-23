@@ -7,9 +7,18 @@ namespace APP_CONFIGS{
   export const NAME = "app";
 }
 
+namespace STORAGE_TYPE{
+  export const TRAN_RECORDS = "MAINTAINANCE_RECORDS";
+  export const MASTER_MACHINE = "MASTER_MACHINE";
+  export const MASTER_TYPE = "MASTER_TYPE";
+}
+
 namespace VIEW_LABELS{
   export const ENTRY_BUTTON = "登録";
   export const UPDATE_BUTTON = "更新";
+  export const SHOW_BUTTON = "照会";
+  export const EDIT_BUTTON = "編集";
+  export const DELETE_BUTON = "削除";
 
   //各ページタイトル
   export const TITLE_HOME = "home";
@@ -37,12 +46,21 @@ namespace VIEW_LABELS_MASTER{
   //設定マスタヘッダタイトル
   export const MSTR_MACHINE_VIEW = "機体一覧";
   export const MSTR_BUNRUI_VIEW = "分類一覧";
+  export const MACHINE_SIGN_UP = "新規";
+  export const MACHINE_SIGN_UP_BUTTON = "登録";
+  export const MACHINE_LIST = "一覧";
 }
 
 namespace SELECT_LIST_TYPES{
   export const MY_MACHINES = "bike";
   export const D_BUNRUI = "d_bunrui";
   export const C_BUNRUI = "c_bunrui";
+}
+
+namespace RETURN_CD{
+  export const SUCCESS = "0";
+  export const HAS_REGULAR_ERR = "8"; //システムで想定されるエラー(エラーチェックなど)
+  export const HAS_FATAL_ERR = "9"; //致命的なエラー
 }
 
 namespace CONST_MESSAGES{
@@ -52,4 +70,6 @@ namespace CONST_MESSAGES{
   export const UPDATE_FAILURE = "修正に失敗しました...";
   export const DELETE_SUCCESS = "削除しました";
   export const DELETE_FAILURE = "削除に失敗しました...";
+
+  export const CONFIRM_DELETE = "1件削除します。よろしいですか？";
 }

@@ -70,15 +70,21 @@
     <script src="lib/onsen/js/angular/angular.js"></script>
     <script src="lib/onsen/js/onsenui.js"></script>
 
-    <script src="js/constants.js"></script>
-    <script src="js/commonFunctions.js"></script>
-    <script src="js/storageManager.js"></script>
-    <script src="js/MaintainanceRecord.js"></script>
+    <script src="js/const/constants.js"></script>
+
+    <script src="js/common/commonFunctions.js"></script>
+    <script src="js/common/storageManager.js"></script>
+
+    <script src="js/class/MaintainanceRecord.js"></script>
+    <script src="js/class/IFRETURN.js"></script>
 
     <script src="cordova.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/SelectListController.js"></script>
-    <script src="js/SettingsController.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/service/masterManageService.js"></script>
+    <script src="js/controller/homeController.js"></script>
+    <script src="js/controller/recordController.js"></script>
+    <script src="js/controller/selectListController.js"></script>
+    <script src="js/controller/masterController.js"></script>
     <script>
         ons.ready(function() {
             //window.storageManager = new StorageManager();
@@ -478,15 +484,63 @@
       </ons-toolbar>
 
       <ons-list>
-        <ons-list-header></ons-list-header>
-        <ons-list-item></ons-list-item>
+        <ons-list-header>{{mlabels.MACHINE_SIGN_UP}}</ons-list-header>
+        <ons-list-item>
+          <ons-button modifier="large quiet" ng-click="move2MachineDetailRegist()">{{mlabels.MACHINE_SIGN_UP_BUTTON}}</ons-button>
+        </ons-list-item>
 
-        <ons-list-header></ons-list-header>
-        <ons-list-item modifier="chevron" class="item" ng-repeat="item in machines track by $index" ng-click="processItemSelect($index, $event)">
-
+        <ons-list-header>{{mlabels.MACHINE_LIST}}</ons-list-header>
+        <ons-list-item modifier="chevron" class="item" ng-repeat="item in machines track by $index" ng-click="move2MachineDetailView($index, $event)">
+          <ons-row>
+            <ons-col>{{item.id}}</ons-col>
+            <ons-col>{{item.name}}</ons-col>
+          </ons-row>
         </ons-list-item>
       </ons-list>
 
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="master_machine_detail.html">
+    <ons-page ng-controller="MasterMachineDetail">
+
+      <ons-toolbar>
+          <div class="left"><ons-back-button>Back</ons-back-button></div>
+          <div class="center">{{PAGE_TITLE}}</div>
+      </ons-toolbar>
+
+      <ons-list>
+
+        <!-- めんどいんで、各項目は動的に生成しよう... -->
+        <ons-list-item ng-repeat="item in properties">
+          <ons-row>
+            <ons-col>{{item.title}}</ons-col>
+            <ons-col>
+              <span ng-hide="is_readonly">
+                <input ng-hide="item.is_not_normal" type="{{item.type}}" ng-model="machine[item.model]" />
+                <span ng-show="item.is_not_normal">
+                  <ons-button ng-click="selectTest($event)" target-model="{{item.model}}">選択</ons-button><span>{{machine[item.model]}}</span>
+                  <!--<button ng-click="selectTest($event)" target-model="{{item.model}}">選択</button><span>{{machine[item.model]}}</span>-->
+                </span>
+              </span>
+              <span ng-show="is_readonly">{{machine[item.model]}}</span>
+            </ons-col>
+          </ons-row>
+        </ons-list-item>
+
+      </ons-list>
+
+      <ons-list>
+        <ons-list-item ng-hide="is_readonly">
+          <ons-button modifier="large quiet" ng-click="processRegist()">{{UPDATE_BUTTON_NAME}}</ons-button>
+        </ons-list-item>
+        <ons-list-item ng-show="is_edit" >
+          <ons-button modifier="large quiet" ng-click="processDelete()">{{DELETE_BUTTON_NAME}}</ons-button>
+        </ons-list-item>
+        <ons-list-item ng-show="is_readonly">
+          <ons-button modifier="large quiet" ng-click="move2MachineDetailEdit()">{{EDIT_BUTTON_NAME}}</ons-button>
+        </ons-list-item>
+      </ons-list>
 
     </ons-page>
   </ons-template>
@@ -499,41 +553,16 @@
           <div class="center">{{labels.TITLE_DETAIL}}</div>
       </ons-toolbar>
 
-      <div>
-        MasterTypeHeader
-      </div>
-    </ons-page>
-  </ons-template>
-
-<!--
-  <ons-template id="settings.html">
-    <ons-page ng-controller="SettingsController">
-
-      <ons-toolbar>
-        <div class="center">{{labels.TITLE_SETTINGS}}</div>
-      </ons-toolbar>
-
-      <div>
-        can write?
-        {{TITLE_SETTINGS}}
-        {{sharing.hide_tabbar}}
-        {{labels.OPTIONAL1}}
-        {{test}}
-      </div>
-
       <ons-list>
         <ons-list-item>
           <ons-row>
-            <ons-col>
-              test...
-            </ons-col>
+            <ons-col></ons-col>
+            <ons-col></ons-col>
           </ons-row>
         </ons-list-item>
       </ons-list>
-
     </ons-page>
-
   </ons-template>
--->
+
 </body>
 </html>

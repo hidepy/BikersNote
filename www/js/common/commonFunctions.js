@@ -1,4 +1,51 @@
-/// <reference path="../../tsd/cordova/cordova.d.ts"/>
+/// <reference path="../../../tsd/cordova/cordova.d.ts"/>
+/*
+    ★★★ プロジェクト内共通　★★★
+*/
+/* 安全にpoppageする. 戻り先がない場合はhomeに戻る */
+function popPageSafe(nav) {
+    if (nav.canPopPage()) {
+        nav.popPage();
+    }
+    else {
+        nav.resetToPage("home.html");
+    }
+}
+function handleIfreturn(ifr, nav) {
+    if (ifr.id == RETURN_CD.SUCCESS) {
+        showAlert(CONST_MESSAGES.ENTRY_SUCCESS);
+        popPageSafe(nav);
+    }
+    else {
+        showAlert(CONST_MESSAGES.ENTRY_FAILURE);
+    }
+}
+function showConfirm(str, callback) {
+    if (isDevice()) {
+        navigator.notification.confirm(str, function (idx) {
+            callback(idx == 1);
+        });
+    }
+    else {
+        var result = window.confirm(str);
+        callback(result);
+    }
+    /*
+    function onConfirm(buttonIndex) {
+        if (buttonIndex==1) {
+            button = "いいえ";
+        } else if (buttonIndex==2) {
+            button = "はい";
+        } else {
+            button = "unknown";
+        }
+        document.getElementById("confirm").innerHTML = button + " が押されました。";
+    }
+    */
+}
+/*
+    ★★★ 全プロジェクト共通　★★★
+*/
 /* 実機上でもobjectのログを安全に吐く */
 function outlog(v) {
     if (typeof v === "object") {

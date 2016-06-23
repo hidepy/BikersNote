@@ -3,7 +3,6 @@
 */
 (function () {
     'use strict';
-    //var module = angular.module('selectList');
     var module = angular.module(APP_CONFIGS.NAME); //第2引数省略 既存モジュール拡張
     module.controller("SelectListController", function ($scope, $rootScope, selectList) {
         $scope.items = selectList.items;

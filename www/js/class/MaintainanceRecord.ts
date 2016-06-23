@@ -1,6 +1,5 @@
 /*
   整備レコードクラス
-    めんどいんで、アクセサとかなしで...
 */
 class MaintainanceRecord{
 
