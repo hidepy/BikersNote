@@ -13,10 +13,11 @@
             });
         };
     });
-    module.controller("ViewRecordDetailConrtoller", function ($scope) {
-        outlog("in ViewRecordDetailConrtoller");
+    module.controller("ViewRecordDetailController", function ($scope) {
+        outlog("in ViewRecordDetailController");
         var args = myNavigator.getCurrentPage().options;
         $scope.item = args.onTransitionEnd.item; //整備情報を取得(前画面からの情報まんまでよいか？)
+        $scope.properties = MaintainanceRecord.getProperties(true);
         $scope.movetoUpdate = function () {
             myNavigator.pushPage('entry_record.html', {
                 onTransitionEnd: {

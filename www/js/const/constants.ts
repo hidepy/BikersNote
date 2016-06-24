@@ -29,17 +29,17 @@ namespace VIEW_LABELS{
   export const TITLE_SETTINGS = "settings";
 
   // 共通で使用するラベル文字列
-  export const MACHINE = "対象の機体";
-  export const TITLE = "タイトル";
-  export const D_BUNRUI = "大分類";
-  export const C_BUNRUI = "中分類";
-  export const ODD_METER = "現在の走行距離";
-  export const DONE_DATE = "日付";
-  export const MONEY = "費用";
-  export const COMMENT = "コメント";
-  export const OPTIONAL1_DEFAULT = "備考1";
-  export const OPTIONAL2_DEFAULT = "備考2";
-  export const OPTIONAL3_DEFAULT = "備考3";
+  export const COL_MACHINE = "対象の機体";
+  export const COL_TITLE = "タイトル";
+  export const COL_D_BUNRUI = "大分類";
+  export const COL_C_BUNRUI = "中分類";
+  export const COL_ODD_METER = "現在の走行距離";
+  export const COL_DONE_DATE = "日付";
+  export const COL_MONEY = "費用";
+  export const COL_COMMENT = "コメント";
+  export const COL_OPTIONAL1_DEFAULT = "備考1";
+  export const COL_OPTIONAL2_DEFAULT = "備考2";
+  export const COL_OPTIONAL3_DEFAULT = "備考3";
 }
 // マスタ専用 数が増える見込みなので
 namespace VIEW_LABELS_MASTER{
@@ -49,6 +49,16 @@ namespace VIEW_LABELS_MASTER{
   export const MACHINE_SIGN_UP = "新規";
   export const MACHINE_SIGN_UP_BUTTON = "登録";
   export const MACHINE_LIST = "一覧";
+
+
+
+
+  export const COL_MACHINE = "machine";
+  export const COL_HOME_IMG = "img";
+  export const COL_PRCS_DATE = "date";
+  export const COL_RPCS_PRICE = "price";
+  export const COL_CURR_ODD = "odd";
+  export const COL_MAIN_FLG = "main?";
 }
 
 namespace SELECT_LIST_TYPES{

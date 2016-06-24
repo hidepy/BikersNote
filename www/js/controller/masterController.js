@@ -42,31 +42,35 @@
         $scope.DELETE_BUTTON_NAME = VIEW_LABELS.DELETE_BUTON;
         $scope.EDIT_BUTTON_NAME = VIEW_LABELS.EDIT_BUTTON;
         // 項目の情報が入る
+        /*
         $scope.properties = [
-            {
-                model: "name",
-                title: "NAME",
-                type: "text"
-            },
-            {
-                model: "odd_meter",
-                title: "ODD",
-                type: "number"
-            },
-            {
-                model: "is_main",
-                title: "IS_MAIN?",
-                type: "checkbox"
-            },
-            {
-                model: "icon",
-                title: "ICON...",
-                is_not_normal: true,
-                type: "select"
-            }
+          {
+            model: "name",
+            title: "NAME",
+            type: "text"
+          },
+          {
+            model: "odd_meter",
+            title: "ODD",
+            type: "number"
+          },
+          {
+            model: "is_main",
+            title: "IS_MAIN?",
+            type: "checkbox"
+          },
+          {
+            model: "icon",
+            title: "ICON...",
+            is_not_normal: true,
+            type: "select"
+          }
         ];
+        */
+        // バインド対象, 型などの情報を取得
+        $scope.properties = masterManager.getMachinesProperty(true);
+        outlog($scope.properties);
         var args = myNavigator.getCurrentPage().options;
-        outlog(args);
         if (args && args.onTransitionEnd) {
             // booleanに縛る. viewなら読取専用
             $scope.is_readonly = !!args.onTransitionEnd.is_view;

@@ -1,7 +1,7 @@
 /**
  * @description Typedefinition of MaintainanceRecord
  */
-interface MaintainanceRecord {
+interface I_MaintainanceRecord {
 
   id: string;
   bike: string;
@@ -16,12 +16,4 @@ interface MaintainanceRecord {
   optional_2: any;
   optional_3: any;
   update_datetime: Date;
-
-  /**
-   * @return {String} 生成されたID
-   * @description 唯一キーを生成する. staticメソッド
-   */
-  generateId(): string;
-
-
 }

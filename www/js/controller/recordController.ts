@@ -23,24 +23,23 @@
   });
 
 
-  module.controller("ViewRecordDetailConrtoller", function($scope){
+  module.controller("ViewRecordDetailController", function($scope){
 
-      outlog("in ViewRecordDetailConrtoller");
+      outlog("in ViewRecordDetailController");
 
       var args: navigatorOptions = myNavigator.getCurrentPage().options;
 
       $scope.item = args.onTransitionEnd.item; //整備情報を取得(前画面からの情報まんまでよいか？)
 
+      $scope.properties = MaintainanceRecord.getProperties(true);
+
       $scope.movetoUpdate = function(){
-          myNavigator.pushPage(
-            'entry_record.html',
-            {
+          myNavigator.pushPage('entry_record.html',{
               onTransitionEnd:{
                 item: $scope.item,
                 is_modify: true
               }
-            }
-          );
+          });
       };
 
       $scope.processItemDelete = function(){

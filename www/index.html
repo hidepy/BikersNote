@@ -186,7 +186,7 @@
             <ons-list-item>
                 <ons-row>
                     <ons-col>
-                        <label for="input_bike">{{labels.MACHINE}}</label>
+                        <label for="input_bike">{{labels.COL_MACHINE}}</label>
                     </ons-col>
                     <ons-col>
                         <ons-button id="entry_bike_select_button" ng-click="showSelectListBike()">select</ons-button>
@@ -199,7 +199,7 @@
             <ons-list-item>
                 <ons-row>
                     <ons-col class="label_area">
-                        <label for="entry_title">{{labels.TITLE}}</label>
+                        <label for="entry_title">{{labels.COL_TITLE}}</label>
                     </ons-col>
                     <ons-col>
                       <input type="text" ng-model="data.title" id="entry_title">
@@ -210,7 +210,7 @@
               <ons-list-item>
                   <ons-row>
                       <ons-col>
-                          <label for="input_d_bunrui">{{labels.D_BUNRUI}}</label>
+                          <label for="input_d_bunrui">{{labels.COL_D_BUNRUI}}</label>
                       </ons-col>
                       <ons-col>
                           <ons-button id="entry_d_bunrui_select_button" ng-click="showSelectListDBunrui()">選択</ons-button>
@@ -222,7 +222,7 @@
               <ons-list-item>
                   <ons-row>
                       <ons-col>
-                          <label for="input_c_bunrui">{{labels.C_BUNRUI}}</label>
+                          <label for="input_c_bunrui">{{labels.COL_C_BUNRUI}}</label>
                       </ons-col>
                       <ons-col>
                           <ons-button id="entry_c_bunrui_select_button" ng-click="showSelectListCBunrui()">選択</ons-button>
@@ -234,7 +234,7 @@
               <ons-list-item>
                   <ons-row>
                       <ons-col>
-                          <label for="input_odd_meter">{{labels.ODD_METER}}</label>
+                          <label for="input_odd_meter">{{labels.COL_ODD_METER}}</label>
                       </ons-col>
                       <ons-col>
                           <input type="text" ng-model="data.odd_meter" id="input_odd_meter">
@@ -245,7 +245,7 @@
               <ons-list-item>
                   <ons-row>
                       <ons-col>
-                          <label for="input_done_date">{{labels.DONE_DATE}}</label>
+                          <label for="input_done_date">{{labels.COL_DONE_DATE}}</label>
                       </ons-col>
                       <ons-col>
                           <input type="text" ng-model="data.done_date" id="input_done_date">
@@ -256,7 +256,7 @@
               <ons-list-item>
                   <ons-row>
                       <ons-col>
-                          <label for="input_money">{{labels.MONEY}}</label>
+                          <label for="input_money">{{labels.COL_MONEY}}</label>
                       </ons-col>
                       <ons-col>
                           <input type="text" ng-model="data.money" id="input_money">
@@ -267,7 +267,7 @@
               <ons-list-item>
                   <ons-row>
                       <ons-col>
-                          <label for="input_comment">{{labels.COMMENT}}</label>
+                          <label for="input_comment">{{labels.COL_COMMENT}}</label>
                       </ons-col>
                       <ons-col>
                           <input type="text" ng-model="data.comment" id="input_comment">
@@ -278,7 +278,7 @@
               <ons-list-item>
                   <ons-row>
                       <ons-col>
-                          <label for="input_optional1">{{labels.OPTIONAL1}}</label>
+                          <label for="input_optional1">{{labels.COL_OPTIONAL1}}</label>
                       </ons-col>
                       <ons-col>
                           <input type="text" ng-model="data.optional_1" id="input_optional1">
@@ -289,7 +289,7 @@
               <ons-list-item>
                   <ons-row>
                       <ons-col>
-                          <label for="input_optional2">{{labels.OPTIONAL2}}</label>
+                          <label for="input_optional2">{{labels.COL_OPTIONAL2}}</label>
                       </ons-col>
                       <ons-col>
                           <input type="text" ng-model="data.optional_2" id="input_optional2">
@@ -300,7 +300,7 @@
               <ons-list-item>
                   <ons-row>
                       <ons-col>
-                          <label for="input_optional3">{{labels.OPTIONAL3}}</label>
+                          <label for="input_optional3">{{labels.COL_OPTIONAL3}}</label>
                       </ons-col>
                       <ons-col>
                           <input type="text" ng-model="data.optional_3" id="input_optional3">
@@ -356,7 +356,7 @@
 
   <!-- 整備情報詳細ページ(読専) -->
   <ons-template id="view_record_detail_page.html">
-      <ons-page ng-controller="ViewRecordDetailConrtoller">
+      <ons-page ng-controller="ViewRecordDetailController">
 
         <ons-toolbar>
             <div class="left"><ons-back-button>Back</ons-back-button></div>
@@ -365,84 +365,12 @@
 
         <ons-list>
 
-          <ons-list-item>
-              <ons-row>
-                  <ons-col>{{labels.MACHINE}}</ons-col>
-                  <ons-col>{{item.bike}}</ons-col>
+          <ons-list-item ng-repeat="p in properties">
+              <ons-row ng-hide="p.no_disp">
+                  <ons-col>{{p.label}}</ons-col>
+                  <ons-col>{{item[p.name]}}</ons-col>
               </ons-row>
           </ons-list-item>
-
-            <ons-list-item>
-                <ons-row>
-                    <ons-col>{{labels.TITLE}}</ons-col>
-                    <ons-col>{{item.title}}</ons-col>
-                </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-              <ons-row>
-                <ons-col>{{labels.D_BUNRUI}}</ons-col>
-                <ons-col>{{item.d_bunrui}}</ons-col>
-              </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-              <ons-row>
-                <ons-col>{{labels.C_BUNRUI}}</ons-col>
-                <ons-col>{{item.c_bunrui}}</ons-col>
-              </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-              <ons-row>
-                <ons-col>{{labels.ODD_METER}}</ons-col>
-                <ons-col>{{item.odd_meter}}</ons-col>
-              </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-              <ons-row>
-                <ons-col>{{labels.DONE_DATE}}</ons-col>
-                <ons-col>{{item.done_date}}</ons-col>
-              </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-              <ons-row>
-                <ons-col>{{labels.MONEY}}</ons-col>
-                <ons-col>{{item.money}}</ons-col>
-              </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-              <ons-row>
-                <ons-col>{{labels.COMMENT}}</ons-col>
-                <ons-col>{{item.comment}}</ons-col>
-              </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-              <ons-row>
-                <ons-col>{{labels.OPTIONAL1}}</ons-col>
-                <ons-col>{{item.optional_1}}</ons-col>
-              </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-              <ons-row>
-                <ons-col>{{labels.OPTIONAL2}}</ons-col>
-                <ons-col>{{item.optional_2}}</ons-col>
-              </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-              <ons-row>
-                <ons-col>{{labels.OPTIONAL3}}</ons-col>
-                <ons-col>{{item.optional_3}}</ons-col>
-              </ons-row>
-            </ons-list-item>
-
-        </ons-list>
 
         <ons-button modifier="quiet large" ng-click="movetoUpdate()">modify</ons-button>
         <ons-button modifier="large" ng-click="processItemDelete()">delete</ons-button>
@@ -514,16 +442,28 @@
         <!-- めんどいんで、各項目は動的に生成しよう... -->
         <ons-list-item ng-repeat="item in properties">
           <ons-row>
-            <ons-col>{{item.title}}</ons-col>
+            <ons-col>{{item.label}}</ons-col>
             <ons-col>
               <span ng-hide="is_readonly">
-                <input ng-hide="item.is_not_normal" type="{{item.type}}" ng-model="machine[item.model]" />
-                <span ng-show="item.is_not_normal">
-                  <ons-button ng-click="selectTest($event)" target-model="{{item.model}}">選択</ons-button><span>{{machine[item.model]}}</span>
-                  <!--<button ng-click="selectTest($event)" target-model="{{item.model}}">選択</button><span>{{machine[item.model]}}</span>-->
+                <input ng-hide="item.not_normal" type="{{item.input_type}}" ng-model="machine[item.name]" />
+                <span ng-show="item.not_normal">
+                  <span ng-show="item.is_select">
+                    <ons-button ng-click="selectTest($event)" target-model="{{item.name}}">選択</ons-button><span>{{machine[item.name]}}</span>
+                    <!--<button ng-click="selectTest($event)" target-model="{{item.name}}">選択</button><span>{{machine[item.model]}}</span>-->
+                  </span>
+                  <span ng-show="item.is_img">
+                      picking!!
+                  </span>
                 </span>
               </span>
-              <span ng-show="is_readonly">{{machine[item.model]}}</span>
+              <span ng-show="is_readonly">
+                <span ng-if="true">
+                  {{machine[item.name]}}
+                </span>
+                <span ng-if="false">
+                  <img ng-src="{{item.url}}" />
+                </span>
+              </span>
             </ons-col>
           </ons-row>
         </ons-list-item>

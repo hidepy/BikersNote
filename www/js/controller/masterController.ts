@@ -56,6 +56,7 @@
     $scope.EDIT_BUTTON_NAME = VIEW_LABELS.EDIT_BUTTON;
 
     // 項目の情報が入る
+    /*
     $scope.properties = [
       {
         model: "name",
@@ -79,10 +80,13 @@
         type: "select"
       }
     ];
-
+    */
+    // バインド対象, 型などの情報を取得
+    $scope.properties = masterManager.getMachinesProperty(true);
+    outlog($scope.properties);
 
     var args: navigatorOptions = myNavigator.getCurrentPage().options;
-    outlog(args);
+
     if(args && args.onTransitionEnd){
       // booleanに縛る. viewなら読取専用
       $scope.is_readonly = !!args.onTransitionEnd.is_view;
