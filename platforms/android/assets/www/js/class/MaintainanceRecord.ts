@@ -28,8 +28,8 @@ class MaintainanceRecord implements I_MaintainanceRecord{
       return [
         { name: "id", type: "string", no_disp: true},
         { name: "bike", type: "string", label: VIEW_LABELS.COL_MACHINE, not_normal: true, is_select: true },
-        { name: "title", type: "string", label: VIEW_LABELS.COL_TITLE, required: true, input_type: "text" },
-        { name: "d_bunrui", type: "string", label: VIEW_LABELS.COL_D_BUNRUI, required: true, not_normal: true, is_select: true },
+        { name: "title", type: "string", label: VIEW_LABELS.COL_TITLE, input_type: "text" },
+        { name: "d_bunrui", type: "string", label: VIEW_LABELS.COL_D_BUNRUI, not_normal: true, is_select: true },
         { name: "c_bunrui", type: "string", label: VIEW_LABELS.COL_C_BUNRUI,not_normal: true, is_select: true },
         { name: "odd_meter", type: "number", label: VIEW_LABELS.COL_ODD_METER, input_type: "number" },
         { name: "done_date", type: "Date", label: VIEW_LABELS.COL_DONE_DATE, input_type: "date" },

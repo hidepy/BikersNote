@@ -50,12 +50,15 @@ namespace VIEW_LABELS_MASTER{
   export const MACHINE_SIGN_UP_BUTTON = "登録";
   export const MACHINE_LIST = "一覧";
 
-  export const COL_MACHINE = "機体名";
-  export const COL_HOME_IMG = "アイコン画像";
-  export const COL_PRCS_DATE = "購入日付";
-  export const COL_RPCS_PRICE = "購入価格";
-  export const COL_CURR_ODD = "現在の走行距離";
-  export const COL_MAIN_FLG = "メインの機体にする";
+
+
+
+  export const COL_MACHINE = "machine";
+  export const COL_HOME_IMG = "img";
+  export const COL_PRCS_DATE = "date";
+  export const COL_RPCS_PRICE = "price";
+  export const COL_CURR_ODD = "odd";
+  export const COL_MAIN_FLG = "main?";
 }
 
 namespace SELECT_LIST_TYPES{

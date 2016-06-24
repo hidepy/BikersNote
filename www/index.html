@@ -103,6 +103,10 @@
       margin-top: 4px;
       margin-bottom: 4px;
     }
+    .required_mark{
+      color: red;
+      font-size: 120%;
+    }
     </style>
 </head>
 
@@ -441,8 +445,8 @@
 
         <!-- めんどいんで、各項目は動的に生成しよう... -->
         <ons-list-item ng-repeat="item in properties">
-          <ons-row>
-            <ons-col>{{item.label}}</ons-col>
+          <ons-row ng-hide="item.no_disp">
+            <ons-col>{{item.label}}<span ng-show="required" class="required_mark">*</ons-col>
             <ons-col>
               <span ng-hide="is_readonly">
                 <input ng-hide="item.not_normal" type="{{item.input_type}}" ng-model="machine[item.name]" />

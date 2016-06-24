@@ -14,7 +14,7 @@
             if (with_type) {
                 return [
                     { name: "id", type: "string", no_disp: true },
-                    { name: "name", type: "string", label: VIEW_LABELS_MASTER.COL_MACHINE, required: true, input_type: "text" },
+                    { name: "name", type: "string", label: VIEW_LABELS_MASTER.COL_MACHINE, input_type: "text" },
                     { name: "icon", type: "any", label: VIEW_LABELS_MASTER.COL_HOME_IMG, not_normal: true, is_img: true },
                     { name: "purchase_date", type: "Date", label: VIEW_LABELS_MASTER.COL_PRCS_DATE, input_type: "date" },
                     { name: "purchase_price", type: "number", label: VIEW_LABELS_MASTER.COL_RPCS_PRICE, input_type: "number" },

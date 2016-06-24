@@ -1,0 +1,22 @@
+<ons-page ng-controller="SelectListController">
+
+  <ons-toolbar>
+    <div class="left"><ons-back-button>Back</ons-back-button></div>
+    <div class="center">Select</div>
+    <div class="right">
+      <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+
+    <ons-list-item modifier="chevron" class="item" ng-repeat="item in items" ng-click="processItemSelect($index)">
+        <ons-row>
+            <ons-col class="{{}}">
+                <p class="item-desc">{{item.key}}</p>
+            </ons-col>
+            <ons-col class="{{}}">
+                <p class="item-desc">{{item.value}}</p>
+            </ons-col>
+        </ons-row>
+    </ons-list-item>
+
+</ons-page>
