@@ -18,7 +18,7 @@ namespace VIEW_LABELS{
   export const UPDATE_BUTTON = "更新";
   export const SHOW_BUTTON = "照会";
   export const EDIT_BUTTON = "編集";
-  export const DELETE_BUTON = "削除";
+  export const DELETE_BUTTON = "削除";
 
   //各ページタイトル
   export const TITLE_HOME = "home";

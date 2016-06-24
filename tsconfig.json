@@ -33,7 +33,6 @@
   ],
   "files": [
     "./www/js/class/IFRETURN.ts",
-    "./www/js/class/MaintainanceRecord.ts",
     "./www/js/common/commonFunctions.ts",
     "./www/js/common/storageManager.ts",
     "./www/js/const/constants.ts",
@@ -43,6 +42,7 @@
     "./www/js/controller/selectListController.ts",
     "./www/js/main.ts",
     "./www/js/service/masterManageService.ts",
+    "./www/js/service/recordManageService.ts",
     "./tsd/angular/angular-1.4.d.ts",
     "./tsd/common.d.ts",
     "./tsd/cordova/cordova.d.ts",

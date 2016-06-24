@@ -4,11 +4,13 @@
 (function () {
     'use strict';
     var module = angular.module(APP_CONFIGS.NAME); //第2引数省略 既存モジュール拡張
+    // ストレージマネージャをインスタンス化
+    var _sm_machine = new StorageManager(STORAGE_TYPE.MASTER_MACHINE);
+    var _sm_cbunrui = new StorageManager(STORAGE_TYPE.MASTER_TYPE);
+    var _d_bunrui = {};
     module.service("masterManager", function () {
-        // ストレージマネージャをインスタンス化
-        var _sm = new StorageManager(STORAGE_TYPE.MASTER_MACHINE);
         this.getMachines = function () {
-            return convHash2Arr(_sm.getAllItem());
+            return convHash2Arr(_sm_machine.getAllItem());
         };
         this.getMachinesProperty = function (with_type) {
             if (with_type) {
@@ -26,7 +28,7 @@
                 return ["id", "name", "icon", "purchase_date", "purchase_price", "odd_meter", "is_main"];
             }
         };
-        this.registMachine = function (value) {
+        this.registRecord = function (value) {
             var err_list = [];
             var if_return = new IFRETURN();
             // エラーチェックを行う ok なら次へ
@@ -39,14 +41,14 @@
             if (isEmpty(value.id)) {
                 value.id = formatDate(new Date());
             }
-            var res = _sm.saveItem2Storage(value.id, value);
+            var res = _sm_machine.saveItem2Storage(value.id, value);
             if_return.id = res ? RETURN_CD.SUCCESS : RETURN_CD.HAS_FATAL_ERR;
             if_return.msg = res ? "" : "has ftl err";
             return if_return;
         };
         this.deleteMachine = function (value) {
             var if_return = new IFRETURN();
-            var res = _sm.deleteItem(value);
+            var res = _sm_machine.deleteItem(value);
             if_return.id = res ? RETURN_CD.SUCCESS : RETURN_CD.HAS_FATAL_ERR;
             if_return.msg = res ? "" : "has ftl err";
             return if_return;

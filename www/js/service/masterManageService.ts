@@ -5,14 +5,18 @@
   'use strict';
 
   var module = angular.module(APP_CONFIGS.NAME); //第2引数省略 既存モジュール拡張
+  // ストレージマネージャをインスタンス化
+  var _sm_machine: StorageManager = new StorageManager(STORAGE_TYPE.MASTER_MACHINE);
+  var _sm_cbunrui: StorageManager = new StorageManager(STORAGE_TYPE.MASTER_TYPE);
+  var _d_bunrui = {
+
+  };
+
 
   module.service("masterManager", function(){
 
-    // ストレージマネージャをインスタンス化
-    var _sm: StorageManager = new StorageManager(STORAGE_TYPE.MASTER_MACHINE);
-
     this.getMachines = ()=> {
-      return convHash2Arr(_sm.getAllItem());
+      return convHash2Arr(_sm_machine.getAllItem());
     };
 
     this.getMachinesProperty = (with_type?: boolean): any=> {
@@ -32,7 +36,7 @@
       }
     };
 
-    this.registMachine = (value: any): IFRETURN=> {
+    this.registRecord = (value: any): IFRETURN=> {
 
       let err_list = [];
       let if_return: IFRETURN = new IFRETURN();
@@ -49,7 +53,7 @@
         value.id = formatDate(new Date());
       }
 
-      let res = _sm.saveItem2Storage(value.id, value);
+      let res = _sm_machine.saveItem2Storage(value.id, value);
 
       if_return.id = res ? RETURN_CD.SUCCESS : RETURN_CD.HAS_FATAL_ERR;
       if_return.msg = res ? "" : "has ftl err";
@@ -59,7 +63,7 @@
 
     this.deleteMachine = (value: any): IFRETURN=> {
       let if_return: IFRETURN = new IFRETURN();
-      let res = _sm.deleteItem(value);
+      let res = _sm_machine.deleteItem(value);
 
       if_return.id = res ? RETURN_CD.SUCCESS : RETURN_CD.HAS_FATAL_ERR;
       if_return.msg = res ? "" : "has ftl err";

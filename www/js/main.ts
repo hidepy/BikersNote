@@ -3,7 +3,6 @@ declare var myTabbar: TabbarView;
 /// <reference path="./common/commonFunctions.ts" />
 /// <reference path="./common/storageManager.ts" />
 /// <reference path="./const/constants.ts"/>
-/// <reference path="./class/MaintainanceRecord.ts"/>
 
 var storage_manager_records: StorageManager = new StorageManager(STORAGE_TYPE.TRAN_RECORDS);
 
