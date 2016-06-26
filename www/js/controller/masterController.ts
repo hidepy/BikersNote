@@ -24,7 +24,8 @@
   module.controller("MasterMachineHeader", function($scope, masterManager){
     console.log("in MasterMachineHeader");
 
-    $scope.machines = masterManager.getMachines();
+    $scope.machines = masterManager.Machines.getRecords();//masterManager.getMachines();
+    outlog($scope.machines);
 
     $scope.move2MachineDetailRegist = function(){
       myNavigator.pushPage("master_machine_detail.html", {
@@ -57,7 +58,7 @@
 
     // 項目の情報が入る
     // バインド対象, 型などの情報を取得
-    $scope.properties = masterManager.getMachinesProperty(true);
+    $scope.properties = masterManager.Machines.getProperty(true);
     outlog($scope.properties);
 
     var args: navigatorOptions = myNavigator.getCurrentPage().options;
@@ -88,7 +89,7 @@
 
       // マスタデータ1件登録
       //let if_return: IFRETURN = masterManager.registMachine(item);
-      handleIfreturn(masterManager.registMachine(item), myNavigator);
+      handleIfreturn(masterManager.Machines.registRecord(item), myNavigator);
     };
 
     $scope.processDelete = function(){
@@ -99,7 +100,7 @@
       // マスタデータを1件削除(確認ダイアログあり)
       showConfirm(CONST_MESSAGES.CONFIRM_DELETE, function(res){
         if(res){
-          handleIfreturn(masterManager.deleteMachine(id), myNavigator);
+          handleIfreturn(masterManager.Machines.deleteRecord(id), myNavigator);
         }
       });
     };

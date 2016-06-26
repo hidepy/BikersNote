@@ -24,7 +24,8 @@
   module.controller("MasterMachineHeader", function($scope, masterManager){
     console.log("in MasterMachineHeader");
 
-    $scope.machines = masterManager.getMachines();
+    $scope.machines = masterManager.Machines.getRecords();//masterManager.getMachines();
+    outlog($scope.machines);
 
     $scope.move2MachineDetailRegist = function(){
       myNavigator.pushPage("master_machine_detail.html", {
@@ -52,37 +53,12 @@
     $scope.is_readonly = true; // 読取専用か
     $scope.is_edit_screen = true; // 編集画面か
     $scope.PAGE_TITLE = "";
-    $scope.DELETE_BUTTON_NAME = VIEW_LABELS.DELETE_BUTON;
+    $scope.DELETE_BUTTON_NAME = VIEW_LABELS.DELETE_BUTTON;
     $scope.EDIT_BUTTON_NAME = VIEW_LABELS.EDIT_BUTTON;
 
     // 項目の情報が入る
-    /*
-    $scope.properties = [
-      {
-        model: "name",
-        title: "NAME",
-        type: "text"
-      },
-      {
-        model: "odd_meter",
-        title: "ODD",
-        type: "number"
-      },
-      {
-        model: "is_main",
-        title: "IS_MAIN?",
-        type: "checkbox"
-      },
-      {
-        model: "icon",
-        title: "ICON...",
-        is_not_normal: true,
-        type: "select"
-      }
-    ];
-    */
     // バインド対象, 型などの情報を取得
-    $scope.properties = masterManager.getMachinesProperty(true);
+    $scope.properties = masterManager.Machines.getProperty(true);
     outlog($scope.properties);
 
     var args: navigatorOptions = myNavigator.getCurrentPage().options;
@@ -113,7 +89,7 @@
 
       // マスタデータ1件登録
       //let if_return: IFRETURN = masterManager.registMachine(item);
-      handleIfreturn(masterManager.registMachine(item), myNavigator);
+      handleIfreturn(masterManager.Machines.registRecord(item), myNavigator);
     };
 
     $scope.processDelete = function(){
@@ -124,7 +100,7 @@
       // マスタデータを1件削除(確認ダイアログあり)
       showConfirm(CONST_MESSAGES.CONFIRM_DELETE, function(res){
         if(res){
-          handleIfreturn(masterManager.deleteMachine(id), myNavigator);
+          handleIfreturn(masterManager.Machines.deleteRecord(id), myNavigator);
         }
       });
     };

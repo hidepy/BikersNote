@@ -2,39 +2,7 @@
 <html lang="en" ng-app="app">
 <head>
 
-
 <!--
-  2016/06/22 今とまっているところ...
-    1. masterデータをどうやってもってこようか
-      せっかくangularなんで、理想としてはangularのserviceだけれど...
-
-    2. 何単位でファイル分割しようか
-      一まとまり単位にファイル分割したかったんだけど...出来ない様子
-      するなら全部分割か、全部1ファイルか...うそだろ...
-
-
-  やっているのはマスタ画面系です。
--->
-
-<!--
-  $on
-    scope.$on('eventname', function(event, args) {
-  ...
-  });
-  イベントリスナが発生した場合に駆動する
-
-
-
-  $emit
-  scope.$emit('eventname', args);
-  親方向にイベント通知を行う
-
-
-  $broadcast
-  scope.$broadcast('eventname', args);
-  子方向にイベント通知を行う
-    全体にbroadcastしたいなら、$scope.rootScope.broadcast...しないと
-
 
   lazy image loader
   https://github.com/GeneralElectric/winchjs
@@ -48,12 +16,6 @@
 
   d3 on angular
   http://www.ng-newsletter.com/posts/d3-on-angular.html
-
-
-
-
-  angularのthisとscopeの争い
-  http://qiita.com/Quramy/items/e55ba394031794236fc9
 
 -->
 
@@ -75,21 +37,16 @@
     <script src="js/common/commonFunctions.js"></script>
     <script src="js/common/storageManager.js"></script>
 
-    <script src="js/class/MaintainanceRecord.js"></script>
     <script src="js/class/IFRETURN.js"></script>
 
     <script src="cordova.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/service/recordManageService.js"></script>
     <script src="js/service/masterManageService.js"></script>
     <script src="js/controller/homeController.js"></script>
     <script src="js/controller/recordController.js"></script>
     <script src="js/controller/selectListController.js"></script>
     <script src="js/controller/masterController.js"></script>
-    <script>
-        ons.ready(function() {
-            //window.storageManager = new StorageManager();
-        });
-    </script>
 
     <style>
     .label_area{
@@ -102,6 +59,10 @@
     .header_page_list_others > p{
       margin-top: 4px;
       margin-bottom: 4px;
+    }
+    .required_mark{
+      color: red;
+      font-size: 120%;
     }
     </style>
 </head>
@@ -122,7 +83,7 @@
     <ons-navigator var="myNavigator" page="view_record_header_page.html"></ons-navigator>
   </ons-template>
   <ons-template id="entry_record_wrapper.html">
-    <ons-navigator var="myNavigator" page="entry_record.html"></ons-navigator>
+    <ons-navigator var="myNavigator" page="view_record_detail_page.html"></ons-navigator>
   </ons-template>
   <ons-template id="master_wrapper.html">
     <ons-navigator var="myNavigator" page="master.html"></ons-navigator>
@@ -162,155 +123,6 @@
           </ons-list>
 
 <ons-button modifier="quiet" ng-click='delete_all_records()'>DELETE ALL DATA(DANGEEEEEERRRR!!)</ons-button>
-
-<!--
-          <ons-button ng-click='myTabbar.setTabbarVisibility(false)'>test</ons-button>
-
-          <ons-button modifier="large" ng-click="myNavigator.pushPage('entry_record.html')">Next Page</ons-button>
-          <ons-button modifier="cta" ng-click="movetoViewRecordHeader()">view</ons-button>
--->
-
-      </ons-page>
-  </ons-template>
-
-  <ons-template id="entry_record.html">
-      <ons-page ng-controller="EntryController">
-
-        <ons-toolbar>
-          <div class="left"><ons-back-button>Back</ons-back-button></div>
-          <div class="center">{{labels.TITLE_ENTRY}}</div>
-        </ons-toolbar>
-
-          <ons-list modifier="inset">
-
-            <ons-list-item>
-                <ons-row>
-                    <ons-col>
-                        <label for="input_bike">{{labels.COL_MACHINE}}</label>
-                    </ons-col>
-                    <ons-col>
-                        <ons-button id="entry_bike_select_button" ng-click="showSelectListBike()">select</ons-button>
-                        <!-- <span>{{bike}}</span>-->
-                        <span>{{data.bike}}</span>
-                    </ons-col>
-                </ons-row>
-            </ons-list-item>
-
-            <ons-list-item>
-                <ons-row>
-                    <ons-col class="label_area">
-                        <label for="entry_title">{{labels.COL_TITLE}}</label>
-                    </ons-col>
-                    <ons-col>
-                      <input type="text" ng-model="data.title" id="entry_title">
-                    </ons-col>
-                </ons-row>
-            </ons-list-item>
-
-              <ons-list-item>
-                  <ons-row>
-                      <ons-col>
-                          <label for="input_d_bunrui">{{labels.COL_D_BUNRUI}}</label>
-                      </ons-col>
-                      <ons-col>
-                          <ons-button id="entry_d_bunrui_select_button" ng-click="showSelectListDBunrui()">選択</ons-button>
-                          <span>{{data.d_bunrui}}</span>
-                      </ons-col>
-                  </ons-row>
-              </ons-list-item>
-
-              <ons-list-item>
-                  <ons-row>
-                      <ons-col>
-                          <label for="input_c_bunrui">{{labels.COL_C_BUNRUI}}</label>
-                      </ons-col>
-                      <ons-col>
-                          <ons-button id="entry_c_bunrui_select_button" ng-click="showSelectListCBunrui()">選択</ons-button>
-                          <span>{{data.c_bunrui}}</span>
-                      </ons-col>
-                  </ons-row>
-              </ons-list-item>
-
-              <ons-list-item>
-                  <ons-row>
-                      <ons-col>
-                          <label for="input_odd_meter">{{labels.COL_ODD_METER}}</label>
-                      </ons-col>
-                      <ons-col>
-                          <input type="text" ng-model="data.odd_meter" id="input_odd_meter">
-                      </ons-col>
-                  </ons-row>
-              </ons-list-item>
-
-              <ons-list-item>
-                  <ons-row>
-                      <ons-col>
-                          <label for="input_done_date">{{labels.COL_DONE_DATE}}</label>
-                      </ons-col>
-                      <ons-col>
-                          <input type="text" ng-model="data.done_date" id="input_done_date">
-                      </ons-col>
-                  </ons-row>
-              </ons-list-item>
-
-              <ons-list-item>
-                  <ons-row>
-                      <ons-col>
-                          <label for="input_money">{{labels.COL_MONEY}}</label>
-                      </ons-col>
-                      <ons-col>
-                          <input type="text" ng-model="data.money" id="input_money">
-                      </ons-col>
-                  </ons-row>
-              </ons-list-item>
-
-              <ons-list-item>
-                  <ons-row>
-                      <ons-col>
-                          <label for="input_comment">{{labels.COL_COMMENT}}</label>
-                      </ons-col>
-                      <ons-col>
-                          <input type="text" ng-model="data.comment" id="input_comment">
-                      </ons-col>
-                  </ons-row>
-              </ons-list-item>
-
-              <ons-list-item>
-                  <ons-row>
-                      <ons-col>
-                          <label for="input_optional1">{{labels.COL_OPTIONAL1}}</label>
-                      </ons-col>
-                      <ons-col>
-                          <input type="text" ng-model="data.optional_1" id="input_optional1">
-                      </ons-col>
-                  </ons-row>
-              </ons-list-item>
-
-              <ons-list-item>
-                  <ons-row>
-                      <ons-col>
-                          <label for="input_optional2">{{labels.COL_OPTIONAL2}}</label>
-                      </ons-col>
-                      <ons-col>
-                          <input type="text" ng-model="data.optional_2" id="input_optional2">
-                      </ons-col>
-                  </ons-row>
-              </ons-list-item>
-
-              <ons-list-item>
-                  <ons-row>
-                      <ons-col>
-                          <label for="input_optional3">{{labels.COL_OPTIONAL3}}</label>
-                      </ons-col>
-                      <ons-col>
-                          <input type="text" ng-model="data.optional_3" id="input_optional3">
-                      </ons-col>
-                  </ons-row>
-              </ons-list-item>
-
-          </ons-list>
-
-        <ons-button modifier="large" ng-click="processEntryRecord()">{{UPDATE_BUTTON_NAME}}</ons-button>
 
       </ons-page>
   </ons-template>
@@ -365,21 +177,40 @@
 
         <ons-list>
 
-          <ons-list-item ng-repeat="p in properties">
-              <ons-row ng-hide="p.no_disp">
-                  <ons-col>{{p.label}}</ons-col>
-                  <ons-col>{{item[p.name]}}</ons-col>
-              </ons-row>
+          <ons-list-item ng-repeat="item in properties" ng-hide="item.no_disp">
+            <ons-row>
+              <ons-col>{{item.label}}<span ng-show="item.required" class="required_mark">*</ons-col>
+              <ons-col>
+                <span ng-hide="is_view">
+                  <input ng-hide="item.not_normal" type="{{item.input_type}}" ng-model="record[item.name]" />
+                  <span ng-show="item.not_normal">
+                    <span ng-show="item.is_select">
+                      <ons-button ng-click="showSelectList(item.name)">選択</ons-button><span>{{record[item.name]}}</span>
+                    </span>
+                    <span ng-show="item.is_img">
+                        picking!!
+                    </span>
+                  </span>
+                </span>
+                <span ng-show="is_view">
+                  <span ng-if="true">
+                    {{record[item.name]}}
+                  </span>
+                  <span ng-if="false">
+                    <img ng-src="{{item.url}}" />
+                  </span>
+                </span>
+              </ons-col>
+            </ons-row>
           </ons-list-item>
 
-        <ons-button modifier="quiet large" ng-click="movetoUpdate()">modify</ons-button>
-        <ons-button modifier="large" ng-click="processItemDelete()">delete</ons-button>
+        <ons-button modifier="quiet large" ng-show="is_view" ng-click="move2RecordEdit()">{{labels.EDIT_BUTTON}}</ons-button>
+        <ons-button modifier="quiet large" ng-hide="is_view" ng-click="processRegist()">{{UPDATE_BUTTON_NAME}}</ons-button>
+        <ons-button modifier="large" ng-show="is_modify" ng-click="processDelete()">{{labels.DELETE_BUTTON}}</ons-button>
+
 
       </ons-page>
   </ons-template>
-
-
-
 
 <!--
   ★★★★★ Master ★★★★★
@@ -441,8 +272,8 @@
 
         <!-- めんどいんで、各項目は動的に生成しよう... -->
         <ons-list-item ng-repeat="item in properties">
-          <ons-row>
-            <ons-col>{{item.label}}</ons-col>
+          <ons-row ng-hide="item.no_disp">
+            <ons-col>{{item.label}}<span ng-show="required" class="required_mark">*</ons-col>
             <ons-col>
               <span ng-hide="is_readonly">
                 <input ng-hide="item.not_normal" type="{{item.input_type}}" ng-model="machine[item.name]" />

@@ -10,7 +10,8 @@ namespace APP_CONFIGS{
 namespace STORAGE_TYPE{
   export const TRAN_RECORDS = "MAINTAINANCE_RECORDS";
   export const MASTER_MACHINE = "MASTER_MACHINE";
-  export const MASTER_TYPE = "MASTER_TYPE";
+  export const MASTER_D_BUNRUI = "MASTER_D_BUNRUI";
+  export const MASTER_C_BUNRUI = "MASTER_C_BUNRUI";
 }
 
 namespace VIEW_LABELS{

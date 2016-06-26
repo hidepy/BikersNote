@@ -177,11 +177,11 @@
 
         <ons-list>
 
-          <ons-list-item ng-repeat="item in properties">
-            <ons-row ng-hide="item.no_disp">
-              <ons-col>{{item.label}}<span ng-show="required" class="required_mark">*</ons-col>
+          <ons-list-item ng-repeat="item in properties" ng-hide="item.no_disp">
+            <ons-row>
+              <ons-col>{{item.label}}<span ng-show="item.required" class="required_mark">*</ons-col>
               <ons-col>
-                <span ng-hide="is_readonly">
+                <span ng-hide="is_view">
                   <input ng-hide="item.not_normal" type="{{item.input_type}}" ng-model="record[item.name]" />
                   <span ng-show="item.not_normal">
                     <span ng-show="item.is_select">
@@ -192,7 +192,7 @@
                     </span>
                   </span>
                 </span>
-                <span ng-show="is_readonly">
+                <span ng-show="is_view">
                   <span ng-if="true">
                     {{record[item.name]}}
                   </span>

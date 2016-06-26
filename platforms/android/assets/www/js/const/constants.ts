@@ -10,7 +10,8 @@ namespace APP_CONFIGS{
 namespace STORAGE_TYPE{
   export const TRAN_RECORDS = "MAINTAINANCE_RECORDS";
   export const MASTER_MACHINE = "MASTER_MACHINE";
-  export const MASTER_TYPE = "MASTER_TYPE";
+  export const MASTER_D_BUNRUI = "MASTER_D_BUNRUI";
+  export const MASTER_C_BUNRUI = "MASTER_C_BUNRUI";
 }
 
 namespace VIEW_LABELS{
@@ -18,7 +19,7 @@ namespace VIEW_LABELS{
   export const UPDATE_BUTTON = "更新";
   export const SHOW_BUTTON = "照会";
   export const EDIT_BUTTON = "編集";
-  export const DELETE_BUTON = "削除";
+  export const DELETE_BUTTON = "削除";
 
   //各ページタイトル
   export const TITLE_HOME = "home";
@@ -50,15 +51,12 @@ namespace VIEW_LABELS_MASTER{
   export const MACHINE_SIGN_UP_BUTTON = "登録";
   export const MACHINE_LIST = "一覧";
 
-
-
-
-  export const COL_MACHINE = "machine";
-  export const COL_HOME_IMG = "img";
-  export const COL_PRCS_DATE = "date";
-  export const COL_RPCS_PRICE = "price";
-  export const COL_CURR_ODD = "odd";
-  export const COL_MAIN_FLG = "main?";
+  export const COL_MACHINE = "機体名";
+  export const COL_HOME_IMG = "アイコン画像";
+  export const COL_PRCS_DATE = "購入日付";
+  export const COL_RPCS_PRICE = "購入価格";
+  export const COL_CURR_ODD = "現在の走行距離";
+  export const COL_MAIN_FLG = "メインの機体にする";
 }
 
 namespace SELECT_LIST_TYPES{
