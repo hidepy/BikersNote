@@ -67,6 +67,7 @@ namespace SELECT_LIST_TYPES{
 
 namespace RETURN_CD{
   export const SUCCESS = "0";
+  export const NO_DATA = "1"; //取得データ/処理対象データがない場合
   export const HAS_REGULAR_ERR = "8"; //システムで想定されるエラー(エラーチェックなど)
   export const HAS_FATAL_ERR = "9"; //致命的なエラー
 }

@@ -31,7 +31,7 @@ interface StorageManager {
      * @param {stringArray} オブジェクトのキー配列
      * @description storage内でkey配列に一致するオブジェクトを削除する
      */
-    deleteItems(keys: stringArray): void;
+    deleteItems(keys: Array<String>): void;
 
     /**
      * @description storage内の全てのデータを削除する

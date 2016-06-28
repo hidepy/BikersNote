@@ -19,6 +19,8 @@
           outlog("in movetoViewRecordHeader");
           myNavigator.pushPage("view_record_header_page.html");
       };
+
+
   });
 
 })();

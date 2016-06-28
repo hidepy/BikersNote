@@ -145,13 +145,23 @@
             <div class="left"><ons-back-button>Back</ons-back-button></div>
             <div class="center">{{labels.TITLE_HEADERS}}</div>
             <div class="right">
-            <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
+            <ons-toolbar-button ng-click="">
+              <ons-icon icon="ion-trash-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
+            </ons-toolbar-button>
+            <ons-toolbar-button>
+              <ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
+            </ons-toolbar-button>
             </div>
         </ons-toolbar>
 
         <ons-list id="header_page_list">
           <ons-list-item modifier="chevron" class="item" ng-repeat="item in items track by $index" ng-click="processItemSelect($index, $event)">
               <ons-row>
+                <ons-col width="40px" class="mark_box">
+                    <label class='checkbox checkbox--list-item fade' ng-show="is_delete_phase" ng-click="$event.stopPropagation();">
+                        <input type='checkbox' checklist-model="del_targets.items" checklist-value="item.id"><div class='checkbox__checkmark checkbox--list-item__checkmark'></div>
+                    </label>
+                </ons-col>
                   <ons-col class="header_page_list_title">
                     <h2>{{item.title}}</h2>
                   </ons-col>
@@ -162,6 +172,12 @@
               </ons-row>
           </ons-list-item>
         </ons-list>
+
+        <div ng-show="is_delete_phase" class="page_under_area">
+            <ons-button ng-click="checkAll()">全選択</ons-button>
+            <ons-button ng-click="uncheckAll()">解除</ons-button>
+            <ons-button ng-click="deleteRecord()" ng-class="{bg_red: del.items.length > 0 }">削除<small>({{del.items.length}})</small></ons-button>
+        </div>
 
       </ons-page>
   </ons-template>
@@ -251,7 +267,7 @@
         <ons-list-header>{{mlabels.MACHINE_LIST}}</ons-list-header>
         <ons-list-item modifier="chevron" class="item" ng-repeat="item in machines track by $index" ng-click="move2MachineDetailView($index, $event)">
           <ons-row>
-            <ons-col>{{item.id}}</ons-col>
+            <!-- <ons-col>{{item.id}}</ons-col> -->
             <ons-col>{{item.name}}</ons-col>
           </ons-row>
         </ons-list-item>
@@ -271,9 +287,9 @@
       <ons-list>
 
         <!-- めんどいんで、各項目は動的に生成しよう... -->
-        <ons-list-item ng-repeat="item in properties">
-          <ons-row ng-hide="item.no_disp">
-            <ons-col>{{item.label}}<span ng-show="required" class="required_mark">*</ons-col>
+        <ons-list-item ng-repeat="item in properties" ng-hide="item.no_disp">
+          <ons-row>
+            <ons-col>{{item.label}}<span ng-show="item.required" class="required_mark">*</ons-col>
             <ons-col>
               <span ng-hide="is_readonly">
                 <input ng-hide="item.not_normal" type="{{item.input_type}}" ng-model="machine[item.name]" />
@@ -305,7 +321,7 @@
         <ons-list-item ng-hide="is_readonly">
           <ons-button modifier="large quiet" ng-click="processRegist()">{{UPDATE_BUTTON_NAME}}</ons-button>
         </ons-list-item>
-        <ons-list-item ng-show="is_edit" >
+        <ons-list-item ng-show="is_edit_screen" >
           <ons-button modifier="large quiet" ng-click="processDelete()">{{DELETE_BUTTON_NAME}}</ons-button>
         </ons-list-item>
         <ons-list-item ng-show="is_readonly">

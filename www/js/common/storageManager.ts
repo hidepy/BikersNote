@@ -35,13 +35,15 @@ saveItem2Storage(key, data) -public
 var StorageManager = function(storage_key_name){
 	this.storage_key_name = storage_key_name;
 	this.init(storage_key_name);
+
+	this._items = {};
 };
 
 // プロトタイプ定義
 !function(proto){
 
-	var _storage_key_name = "";
-	var _items = {};
+	//var _storage_key_name = "";
+	//var _items = {};
 
 	var _ref_arr = [];
 
@@ -49,10 +51,10 @@ var StorageManager = function(storage_key_name){
 		//initialize...
 
 		//対象となるlocalstorageのキーを格納
-		_storage_key_name = storage_key_name;
+		this.storage_key_name = storage_key_name;
 
 		//インスタンス化直後、現在のストレージの情報をハッシュに格納する
-		_items = convStorage2Hash(storage_key_name);
+		this.items = convStorage2Hash(storage_key_name);
 
 	};
 
@@ -77,21 +79,21 @@ var StorageManager = function(storage_key_name){
 	};
 
 	proto.getAllItem = function(){
-		return _items;
+		return this.items;
 	};
 
 	proto.getItem = function(key){
-		return _items[key];
+		return this.items[key];
 	}
 
 	proto.deleteItem = function(key){
 		try{
-			delete　_items[key];
-			window.localStorage.setItem(this.storage_key_name, JSON.stringify(_items));
+			delete　this.items[key];
+			window.localStorage.setItem(this.storage_key_name, JSON.stringify(this.items));
 
 			return true;
 		}catch(e){
-			outlog("error occured... in storageManager#deleteItem");
+			console.log("error occured... in storageManager#deleteItem");
 			outlog(e);
 
 			return false;
@@ -99,25 +101,35 @@ var StorageManager = function(storage_key_name){
 	};
 
 	proto.deleteItems = function(keys){
-		if(keys && keys.length && (keys.length > 0)){
-			keys.forEach(function(v, i, arr){
-				delete _items[v];
-			});
-		}
-
-		window.localStorage.setItem(_storage_key_name, JSON.stringify(_items));
-	};
-
-	proto.saveItem2Storage = function(key, data){
 		try{
-			_items[key] = data;
+			if(keys && keys.length && (keys.length > 0)){
+				keys.forEach(function(v, i, arr){
+					delete this.items[v];
+				});
+			}
 
-			window.localStorage.setItem(_storage_key_name, JSON.stringify(_items));
+			window.localStorage.setItem(this.storage_key_name, JSON.stringify(this.items));
 
 			return true;
 		}
 		catch(e){
-			outlog("error occured... in storageManager#saveItem2Storage");
+			console.log("error occured... in storageManager#deleteItems");
+			outlog(e);
+
+			return false;
+		}
+	};
+
+	proto.saveItem2Storage = function(key, data){
+		try{
+			this.items[key] = data;
+
+			window.localStorage.setItem(this.storage_key_name, JSON.stringify(this.items));
+
+			return true;
+		}
+		catch(e){
+			console.log("error occured... in storageManager#saveItem2Storage");
 			outlog(e);
 
 			return false;
@@ -129,13 +141,13 @@ var StorageManager = function(storage_key_name){
 	};
 
 	proto.getItemLength = function(){
-		return Object.keys(_items).length;
+		return Object.keys(this.items).length;
 	}
 
 
 	// ！！！！！！！！！！通常使用不可！！！！！！！！！！
 	proto.deleteAllItem = function(){
-		window.localStorage.setItem(_storage_key_name, JSON.stringify({}));
+		window.localStorage.setItem(this.storage_key_name, JSON.stringify({}));
 	}
 
 }(StorageManager.prototype);

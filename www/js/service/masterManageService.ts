@@ -21,7 +21,6 @@
     }
   ];
 
-
   module.service("masterManager", function(){
 
     this.DBunrui = {
@@ -36,6 +35,7 @@
         }
 
         let d_bunrui_list = convHash2Arr(_sm_dbunrui.getAllItem());
+
         for(let i = 0; i < d_bunrui_list.length; i++){
           res.push({key: d_bunrui_list[i].id, value: d_bunrui_list[i].name});
         }

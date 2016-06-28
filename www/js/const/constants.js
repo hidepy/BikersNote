@@ -65,6 +65,7 @@ var SELECT_LIST_TYPES;
 var RETURN_CD;
 (function (RETURN_CD) {
     RETURN_CD.SUCCESS = "0";
+    RETURN_CD.NO_DATA = "1"; //取得データ/処理対象データがない場合
     RETURN_CD.HAS_REGULAR_ERR = "8"; //システムで想定されるエラー(エラーチェックなど)
     RETURN_CD.HAS_FATAL_ERR = "9"; //致命的なエラー
 })(RETURN_CD || (RETURN_CD = {}));

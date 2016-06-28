@@ -64,6 +64,23 @@
       return if_return;
     };
 
+    this.deleteRecords = (keys: Array<String>): IFRETURN=> {
+
+      let if_return: IFRETURN = new IFRETURN();
+
+      if(keys && (keys.length > 0)){
+        if_return.id = RETURN_CD.NO_DATA;
+        if_return.msg = "has no data...";
+
+        return if_return;
+      }
+
+      let res = _sm.deleteItems(keys);
+
+      if_return.id = res ? RETURN_CD.SUCCESS : RETURN_CD.HAS_FATAL_ERR;
+      if_return.msg = res ? "" : "has ftl err";
+    };
+
   });
 
 })();

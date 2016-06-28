@@ -12,6 +12,9 @@
       $scope.items = [];
       $scope.items = recordManager.getRecords();
 
+      //削除フェーズか
+      $scope.is_delete_phase = false;
+
       $scope.processItemSelect = function(index, event){
 
           myNavigator.pushPage('view_record_detail_page.html', {
@@ -21,6 +24,44 @@
               }
           });
       };
+
+
+      $scope.del_targets = {
+        items: []
+      };
+
+      // trashを押下した時
+      $scope.pushTrash = function(){
+        // phaseを切り替え
+        $scope.is_delete_phase = !$scope.is_delete_phase;
+      };
+
+      //削除ボタン
+      $scope.deleteRecord = function(){
+          //storage_manager.deleteItems($scope.del_targets.items);
+          let if_return: IFRETURN = recordManager.deleteRecords($scope.del_targets.items);
+
+          if(if_return.id == RETURN_CD.SUCCESS){
+            // 処理成功の場合
+            $scope.del.items = [];
+          }
+
+
+
+      };
+
+      $scope.checkAll = function() {
+          $scope.del_targets.items = [];
+
+          for(var i in $scope.items){
+              $scope.del_targets.items.push($scope.items[i].id);
+          }
+      };
+
+      $scope.uncheckAll = function() {
+          $scope.del.items = [];
+      };
+
   });
 
 
@@ -35,7 +76,6 @@
 
       //前画面からの引数取得
       var args: navigatorOptions = myNavigator.getCurrentPage().options;
-      outlog(args);
 
       if(args && args.onTransitionEnd){
         //詳細ページから編集を押下してきた場合
@@ -65,7 +105,6 @@
 
       // 型定義を取得
       $scope.properties = recordManager.getRecordsProperty(true);
-      outlog($scope.properties);
 
       // 更新画面へ遷移
       $scope.move2RecordEdit = function(){
@@ -122,13 +161,6 @@
         selectList.createItemsFromObjectArr(
           list, "key", "value"
         );
-
-        /*
-        selectList.addItem("1", "GN125");
-        selectList.addItem("2", "VT250");
-        selectList.addItem("3", "SRX250");
-        selectList.addItem("4", "VTR250");
-        */
 
         myNavigator.pushPage('list_select_page.html',{
              onTransitionEnd: {

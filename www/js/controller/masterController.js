@@ -17,7 +17,6 @@
     module.controller("MasterMachineHeader", function ($scope, masterManager) {
         console.log("in MasterMachineHeader");
         $scope.machines = masterManager.Machines.getRecords(); //masterManager.getMachines();
-        outlog($scope.machines);
         $scope.move2MachineDetailRegist = function () {
             myNavigator.pushPage("master_machine_detail.html", {
                 onTransitionEnd: {
@@ -45,7 +44,6 @@
         // 項目の情報が入る
         // バインド対象, 型などの情報を取得
         $scope.properties = masterManager.Machines.getProperty(true);
-        outlog($scope.properties);
         var args = myNavigator.getCurrentPage().options;
         if (args && args.onTransitionEnd) {
             // booleanに縛る. viewなら読取専用
@@ -71,7 +69,8 @@
         };
         $scope.processDelete = function () {
             console.log("in processDelete");
-            var id = $scope.macine.id;
+            var id = $scope.machine.id;
+            console.log("id =" + id);
             // マスタデータを1件削除(確認ダイアログあり)
             showConfirm(CONST_MESSAGES.CONFIRM_DELETE, function (res) {
                 if (res) {
