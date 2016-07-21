@@ -1,15 +1,16 @@
 <!doctype html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="app"> <!-- ※※※※※※ これ！！大丈夫か？？？？固定値になっているはずだが※※※※※※ -->
 <head>
 
 <!--
 
+  2016/07/12
+    tabbarなんか嫌なんで、wikidiverと同様にtopかmenuからいけるかんじにしよう
+
+
+
   lazy image loader
   https://github.com/GeneralElectric/winchjs
-
-
-  wikiの本文にメモを追加できる。自分の
-    必要な所だけ抽出してコピペしておけば、勉強の助けに
 
 
   glot, jqplotなどがチャート
@@ -99,14 +100,71 @@
               </div>
           </ons-toolbar>
 
-  <!--
           <div class="profile-card">
               <img src="images/profile-image-01.png" class="profile-image">
-              <div class="profile-name">{{home.data.name}}</div>
-              <div class="profile-desc">{{home.data.comment}}</div>
-              <div class="profile-purcase_date">{{home.data.purchace_date}}</div>
+              <div class="profile-name">{{data.name}}</div>
+              <div class="profile-desc">{{data.comment}}</div>
+              <div class="profile-purcase_date">{{data.purchace_date}}</div>
           </div>
-  -->
+
+          <div>
+            <ons-button ng-click="getMachine('20160628104436')">update view</ons-button>
+          </div>
+
+<!--
+
+レコード1件追加
+レコード照会
+自機体のメンテ状況照会->トラップ
+
+機体照会/切替
+マスタ照会
+メモ
+
+-->
+
+        <ons-row>
+          <ons-col>
+            <ons-button modifier="large--quiet">
+              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
+              <p>add record</p>
+            </ons-button>
+          </ons-col>
+          <ons-col>
+            <ons-button modifier="large--quiet">
+              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
+              <p>view</p>
+            </ons-button>
+          </ons-col>
+          <ons-col>
+            <ons-button modifier="large--quiet">
+              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
+              <p>state</p>
+            </ons-button>
+          </ons-col>
+        </ons-row>
+        <ons-row>
+          <ons-col>
+            <ons-button modifier="large--quiet">
+              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
+              <p>switch</p>
+            </ons-button>
+          </ons-col>
+          <ons-col>
+            <ons-button modifier="large--quiet">
+              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
+              <p>master</p>
+            </ons-button>
+          </ons-col>
+          <ons-col>
+            <ons-button modifier="large--quiet">
+              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
+              <p>memo</p>
+            </ons-button>
+          </ons-col>
+        </ons-row>
+
+<!--
           <ons-list>
               <ons-list-item>
                   <ons-row>
@@ -121,6 +179,8 @@
                   </ons-row>
               </ons-list-item>
           </ons-list>
+-->
+
 
 <ons-button modifier="quiet" ng-click='delete_all_records()'>DELETE ALL DATA(DANGEEEEEERRRR!!)</ons-button>
 
@@ -145,12 +205,19 @@
             <div class="left"><ons-back-button>Back</ons-back-button></div>
             <div class="center">{{labels.TITLE_HEADERS}}</div>
             <div class="right">
-            <ons-toolbar-button ng-click="">
-              <ons-icon icon="ion-trash-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
-            </ons-toolbar-button>
-            <ons-toolbar-button>
-              <ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
-            </ons-toolbar-button>
+
+              <ons-toolbar-button> <!-- search filterを使用する -->
+                <ons-icon icon="search" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
+              </ons-toolbar-button>
+
+              <ons-toolbar-button>
+                <ons-icon icon="search" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
+              </ons-toolbar-button>
+
+              <ons-toolbar-button ng-click="">
+                <ons-icon icon="ion-trash-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
+              </ons-toolbar-button>
+
             </div>
         </ons-toolbar>
 
@@ -331,6 +398,8 @@
 
     </ons-page>
   </ons-template>
+
+
 
   <ons-template id="master_type_header.html">
     <ons-page ng-controller="MasterTypeHeader">

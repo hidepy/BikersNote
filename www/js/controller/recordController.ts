@@ -11,6 +11,8 @@
       //整備情報レコード
       $scope.items = [];
       $scope.items = recordManager.getRecords();
+      // 削除用
+      $scope.del_targets = { items: [] };
 
       //削除フェーズか
       $scope.is_delete_phase = false;
@@ -26,9 +28,7 @@
       };
 
 
-      $scope.del_targets = {
-        items: []
-      };
+
 
       // trashを押下した時
       $scope.pushTrash = function(){

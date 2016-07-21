@@ -72,6 +72,21 @@
         console.log("in machines.get");
         return convHash2Arr(_sm_machine.getAllItem());
       },
+      getRecord: function(id){
+        return _sm_machine.getItem(id);
+      },
+      getDefaultRecord: function(){
+        var first_key = "";
+        for(var m in _sm_machine.getAllItem()){
+          if(isEmpty(first_key)){ first_key = m; }
+
+          var item = _sm_machine.getItem(m);
+
+          if(item.is_main){ return item; }
+        }
+
+        return _sm_machine[first_key];
+      },
       getProperty: function(with_type?: boolean): any{
         if(with_type){
           return [

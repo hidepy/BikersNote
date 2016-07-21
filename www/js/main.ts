@@ -39,20 +39,6 @@ var storage_manager_records: StorageManager = new StorageManager(STORAGE_TYPE.TR
     });
 
 
-    module.factory("currentBikeInfo", function(){
-        var data: any = {};
-
-        data.name = "gn125";
-        data.purchace_date = "2012/03/11";
-        data.comment = "this is my first bike";
-        data.img = "none";
-        data.maintainance_records = 11;
-        data.touring_records = 21;
-
-        return data;
-
-    });
-
 
     module.factory('$data', function() {
         var data: any = {};
