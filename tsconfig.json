@@ -37,6 +37,7 @@
     "./www/js/common/storageManager.ts",
     "./www/js/const/constants.ts",
     "./www/js/controller/homeController.ts",
+    "./www/js/controller/maintainanceStateController.ts",
     "./www/js/controller/masterController.ts",
     "./www/js/controller/recordController.ts",
     "./www/js/controller/selectListController.ts",
@@ -69,7 +70,7 @@
     "./tsd/cordova/plugins/WebSQL.d.ts",
     "./tsd/jquery/jquery.d.ts",
     "./tsd/MaintainanceRecord.d.ts",
-    "./tsd/MasterMachine.d.ts",
+    "./tsd/MasterObjects.d.ts",
     "./tsd/onsen/onsenui.d.ts",
     "./tsd/StorageManager.d.ts"
   ],

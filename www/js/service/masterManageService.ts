@@ -24,7 +24,7 @@
   module.service("masterManager", function(){
 
     this.DBunrui = {
-      getSelection: function(){
+      getSelection: function(): I_MasterDBunrui[]{
         console.log("in DBunrui.getSelection");
 
         let res = [];
@@ -45,14 +45,20 @@
     };
 
     this.CBunrui = {
-      getSelection: function(){
+      getSelection: function(as_raw?: boolean, dbunrui?: string){
         console.log("in CBunrui.getSelection");
 
         let res = [];
         let c_bunrui_list = convHash2Arr(_sm_cbunrui.getAllItem());
 
         for(let i = 0; i < c_bunrui_list.length; i++){
-          res.push({key: c_bunrui_list[i].id, value: c_bunrui_list[i].name});
+          // 大分類idが与えられていて、それが今回注目の値と違ったらスキップ
+          if(dbunrui && (c_bunrui_list[i].parent_id != dbunrui)){ continue; }
+
+          // そのまま欲しい場合
+          if(as_raw){  res.push(c_bunrui_list[i]); }
+          // select list形式の場合
+          else{ res.push({key: c_bunrui_list[i].id, value: c_bunrui_list[i].name}); }
         }
 
         return res;

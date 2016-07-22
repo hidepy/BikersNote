@@ -36,12 +36,22 @@
             }
         };
         this.CBunrui = {
-            getSelection: function () {
+            getSelection: function (as_raw, dbunrui) {
                 console.log("in CBunrui.getSelection");
                 var res = [];
                 var c_bunrui_list = convHash2Arr(_sm_cbunrui.getAllItem());
                 for (var i = 0; i < c_bunrui_list.length; i++) {
-                    res.push({ key: c_bunrui_list[i].id, value: c_bunrui_list[i].name });
+                    // 大分類idが与えられていて、それが今回注目の値と違ったらスキップ
+                    if (dbunrui && (c_bunrui_list[i].parent_id != dbunrui)) {
+                        continue;
+                    }
+                    // そのまま欲しい場合
+                    if (as_raw) {
+                        res.push(c_bunrui_list[i]);
+                    }
+                    else {
+                        res.push({ key: c_bunrui_list[i].id, value: c_bunrui_list[i].name });
+                    }
                 }
                 return res;
             }
