@@ -20,5 +20,26 @@
             console.log("in getMachine");
             outlog($scope.data);
         };
+        $scope.move2functions = function (type) {
+            console.log("in move2functions. type=" + type);
+            var action_types = {
+                "1": { url: "view_record_detail_page.html", options: {} },
+                "2": { url: "view_record_header_page.html", options: {} },
+                "3": { url: "maintainance_state.html", options: {} },
+                "4": { url: "home.html" },
+                "5": { url: "master.html", options: {} },
+                "6": { action: function () {
+                        console.log("memo pushed");
+                    }
+                }
+            };
+            var act = action_types[type];
+            if (act.url) {
+                myNavigator.pushPage(act.url);
+            }
+            else if (act.action) {
+                act.action();
+            }
+        };
     });
 })();

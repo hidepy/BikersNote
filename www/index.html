@@ -45,6 +45,7 @@
     <script src="js/controller/recordController.js"></script>
     <script src="js/controller/selectListController.js"></script>
     <script src="js/controller/masterController.js"></script>
+    <script src="js/controller/maintainanceStateController.js"></script>
 
     <style>
     .label_area{
@@ -67,13 +68,15 @@
 
 <body ng-controller="RootController">
 
+<!--
   <ons-tabbar hide-tabs="sharing.hide_tabbar" var="myTabbar">
     <ons-tab page="index.html" label="Home" icon="ion-ios-home" active="true"></ons-tab>
     <ons-tab page="view_record_wrapper.html" label="Collection" icon="ion-ios-book"></ons-tab>
     <ons-tab page="entry_record_wrapper.html" label="Record" icon="ion-edit"></ons-tab>
     <ons-tab page="master_wrapper.html" label="Settings" icon="ion-ios-cog"></ons-tab>
   </ons-tabbar>
-
+-->
+<!--
   <ons-template id="index.html">
     <ons-navigator var="myNavigator" page="home.html"></ons-navigator>
   </ons-template>
@@ -86,6 +89,10 @@
   <ons-template id="master_wrapper.html">
     <ons-navigator var="myNavigator" page="master.html"></ons-navigator>
   </ons-template>
+-->
+
+<!-- 上記を生かしたい場合は、このnavigatorを消す -->
+<ons-navigator var="myNavigator" page="home.html"></ons-navigator>
 
   <ons-template id="home.html">
       <ons-page ng-controller="HomeController">
@@ -104,9 +111,11 @@
               <div class="profile-purcase_date">{{data.purchace_date}}</div>
           </div>
 
+<!--
           <div>
             <ons-button ng-click="getMachine('20160628104436')">update view</ons-button>
           </div>
+-->
 
 <!--
 
@@ -122,19 +131,19 @@
 
         <ons-row>
           <ons-col>
-            <ons-button modifier="large--quiet">
+            <ons-button modifier="large--quiet" ng-click="move2functions('1')">
               <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
               <p>add record</p>
             </ons-button>
           </ons-col>
           <ons-col>
-            <ons-button modifier="large--quiet">
+            <ons-button modifier="large--quiet" ng-click="move2functions('2')">
               <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
               <p>view</p>
             </ons-button>
           </ons-col>
           <ons-col>
-            <ons-button modifier="large--quiet" ng-click="myNavigator.pushPage('maintainance_state.html')">
+            <ons-button modifier="large--quiet" ng-click="move2functions('3')">
               <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
               <p>state</p>
             </ons-button>
@@ -142,19 +151,19 @@
         </ons-row>
         <ons-row>
           <ons-col>
-            <ons-button modifier="large--quiet">
+            <ons-button modifier="large--quiet"  ng-click="move2functions('4')">
               <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
               <p>switch</p>
             </ons-button>
           </ons-col>
           <ons-col>
-            <ons-button modifier="large--quiet">
+            <ons-button modifier="large--quiet" ng-click="move2functions('5')">
               <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
               <p>master</p>
             </ons-button>
           </ons-col>
           <ons-col>
-            <ons-button modifier="large--quiet">
+            <ons-button modifier="large--quiet" ng-click="move2functions('6')">
               <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
               <p>memo</p>
             </ons-button>
