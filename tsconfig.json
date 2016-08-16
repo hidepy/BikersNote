@@ -41,6 +41,8 @@
     "./www/js/controller/masterController.ts",
     "./www/js/controller/recordController.ts",
     "./www/js/controller/selectListController.ts",
+    "./www/js/controller/switchMasterController.ts",
+    "./www/js/directive/imagePicker.ts",
     "./www/js/main.ts",
     "./www/js/service/masterManageService.ts",
     "./www/js/service/recordManageService.ts",

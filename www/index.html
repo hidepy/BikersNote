@@ -4,6 +4,9 @@
 
 <!--
 
+  2016/08/16
+    画像選択を部品化する
+
   2016/07/12
     tabbarなんか嫌なんで、wikidiverと同様にtopかmenuからいけるかんじにしよう
 
@@ -259,7 +262,7 @@
                       <ons-button ng-click="showSelectList(item.name)">選択</ons-button><span>{{record[item.name]}}</span>
                     </span>
                     <span ng-show="item.is_img">
-                        picking!!
+                        <div imagePickerDirective="item.imagePickerArgs"></div>
                     </span>
                   </span>
                 </span>
@@ -289,6 +292,7 @@
   <ons-template id="maintainance_state.html">
     <ons-page ng-controller="MaintainanceStateController">
       <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
         <div class="center">MaintainanceState</div>
       </ons-toolbar>
 
@@ -320,6 +324,29 @@
   </ons-template>
 
 
+  <ons-template id="switch_machine.html">
+    <ons-page ng-controller="SwitchMachineController">
+
+      <ons-toolbar>
+          <div class="left"><ons-back-button>Back</ons-back-button></div>
+          <div class="center">{{PAGE_TITLE}}</div>
+      </ons-toolbar>
+
+      <div>
+        <ons-list>
+          <ons-list-item ng-repeat="item in machines track by $index" ng-click="processItemSelect($index)">
+            <ons-col width="30%">
+              <input type="checkbox" />
+            </ons-col>
+            <ons-col>{{item.name}}</ons-col>
+          </ons-list-item>
+        </ons-list>
+      </div>
+
+    </ons-page>
+  </ons-template>
+
+
 
 <!--
   ★★★★★ Master ★★★★★
@@ -328,6 +355,7 @@
     <ons-page ng-controller="MasterController">
 
       <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
         <div class="center">{{labels.TITLE_SETTINGS}}</div>
       </ons-toolbar>
 

@@ -74,6 +74,11 @@
       $scope.is_view = false;
       $scope.UPDATE_BUTTON_NAME = VIEW_LABELS.ENTRY_BUTTON;
 
+      $scope.imagePickerArgs = {
+        button_id:  "viewRecordDetail_imgpickerBtn",
+        img_id: "viewRecordDetail_imgpickerImg"
+      };
+
       //前画面からの引数取得
       var args: navigatorOptions = myNavigator.getCurrentPage().options;
 
@@ -162,7 +167,7 @@
           list, "key", "value"
         );
 
-        myNavigator.pushPage('list_select_page.html',{
+        myNavigator.pushPage('partials/list_select_page.html',{
              onTransitionEnd: {
                title: type
              }

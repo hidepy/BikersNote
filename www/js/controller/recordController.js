@@ -51,6 +51,10 @@
         $scope.is_modify = false;
         $scope.is_view = false;
         $scope.UPDATE_BUTTON_NAME = VIEW_LABELS.ENTRY_BUTTON;
+        $scope.imagePickerArgs = {
+            button_id: "viewRecordDetail_imgpickerBtn",
+            img_id: "viewRecordDetail_imgpickerImg"
+        };
         //前画面からの引数取得
         var args = myNavigator.getCurrentPage().options;
         if (args && args.onTransitionEnd) {
@@ -122,7 +126,7 @@
             }
             selectList.removeAllItems();
             selectList.createItemsFromObjectArr(list, "key", "value");
-            myNavigator.pushPage('list_select_page.html', {
+            myNavigator.pushPage('partials/list_select_page.html', {
                 onTransitionEnd: {
                     title: type
                 }

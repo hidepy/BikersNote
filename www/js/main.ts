@@ -38,8 +38,6 @@ var storage_manager_records: StorageManager = new StorageManager(STORAGE_TYPE.TR
       }
     });
 
-
-
     module.factory('$data', function() {
         var data: any = {};
 
