@@ -42,13 +42,18 @@
 
     <script src="cordova.js"></script>
     <script src="js/main.js"></script>
+
     <script src="js/service/recordManageService.js"></script>
     <script src="js/service/masterManageService.js"></script>
+
+<script src="js/directive/imagePicker.js"></script>
+
     <script src="js/controller/homeController.js"></script>
     <script src="js/controller/recordController.js"></script>
     <script src="js/controller/selectListController.js"></script>
     <script src="js/controller/masterController.js"></script>
     <script src="js/controller/maintainanceStateController.js"></script>
+
 
     <style>
     .label_area{
@@ -65,6 +70,9 @@
     .required_mark{
       color: red;
       font-size: 120%;
+    }
+    .parts_image_picker{
+      
     }
     </style>
 </head>
@@ -119,6 +127,14 @@
             <ons-button ng-click="getMachine('20160628104436')">update view</ons-button>
           </div>
 -->
+
+<div image-picker-directive>
+  I'm in imagePickerDirective
+</div>
+
+<div first-directive>
+  I'm in firstDirective
+</div>
 
 <!--
 
