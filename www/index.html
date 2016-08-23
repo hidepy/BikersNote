@@ -51,6 +51,7 @@
     <script src="js/controller/homeController.js"></script>
     <script src="js/controller/recordController.js"></script>
     <script src="js/controller/selectListController.js"></script>
+    <script src="js/controller/switchMasterController.js"></script>
     <script src="js/controller/masterController.js"></script>
     <script src="js/controller/maintainanceStateController.js"></script>
 
@@ -72,37 +73,13 @@
       font-size: 120%;
     }
     .parts_image_picker{
-      
+
     }
     </style>
 </head>
 
 <body ng-controller="RootController">
 
-<!--
-  <ons-tabbar hide-tabs="sharing.hide_tabbar" var="myTabbar">
-    <ons-tab page="index.html" label="Home" icon="ion-ios-home" active="true"></ons-tab>
-    <ons-tab page="view_record_wrapper.html" label="Collection" icon="ion-ios-book"></ons-tab>
-    <ons-tab page="entry_record_wrapper.html" label="Record" icon="ion-edit"></ons-tab>
-    <ons-tab page="master_wrapper.html" label="Settings" icon="ion-ios-cog"></ons-tab>
-  </ons-tabbar>
--->
-<!--
-  <ons-template id="index.html">
-    <ons-navigator var="myNavigator" page="home.html"></ons-navigator>
-  </ons-template>
-  <ons-template id="view_record_wrapper.html">
-    <ons-navigator var="myNavigator" page="view_record_header_page.html"></ons-navigator>
-  </ons-template>
-  <ons-template id="entry_record_wrapper.html">
-    <ons-navigator var="myNavigator" page="view_record_detail_page.html"></ons-navigator>
-  </ons-template>
-  <ons-template id="master_wrapper.html">
-    <ons-navigator var="myNavigator" page="master.html"></ons-navigator>
-  </ons-template>
--->
-
-<!-- 上記を生かしたい場合は、このnavigatorを消す -->
 <ons-navigator var="myNavigator" page="home.html"></ons-navigator>
 
   <ons-template id="home.html">
@@ -117,10 +94,12 @@
 
           <div class="profile-card">
               <img src="images/profile-image-01.png" class="profile-image">
-              <div class="profile-name">{{data.name}}</div>
-              <div class="profile-desc">{{data.comment}}</div>
-              <div class="profile-purcase_date">{{data.purchace_date}}</div>
+              <div class="profile-name">{{sharing.root_machine.name}}</div>
+              <div class="profile-desc">{{sharing.root_machine.comment}}</div>
+              <div class="profile-purcase_date">{{sharing.root_machine.purchace_date}}</div>
           </div>
+
+<ons-button ng-click="_showdata()">showdata</ons-button>
 
 <!--
           <div>
@@ -302,6 +281,7 @@
       </ons-page>
   </ons-template>
 
+
 <!--
   ★★★★★ need maintainance state ★★★★★
 -->
@@ -339,7 +319,7 @@
     </ons-page>
   </ons-template>
 
-
+  <!-- ★★★★ switch_machine.html ★★★★ -->
   <ons-template id="switch_machine.html">
     <ons-page ng-controller="SwitchMachineController">
 
@@ -348,16 +328,21 @@
           <div class="center">{{PAGE_TITLE}}</div>
       </ons-toolbar>
 
-      <div>
-        <ons-list>
-          <ons-list-item ng-repeat="item in machines track by $index" ng-click="processItemSelect($index)">
-            <ons-col width="30%">
-              <input type="checkbox" />
+      <ons-list>
+        <ons-list-item ng-repeat="item in machines track by $index" ng-click="processItemSelect($index)" modifier="tappable" >
+          <ons-row>
+            <ons-col width="10%" >
+              <input type="radio" name="bunrui" /><div class="radio-button__checkmark radio-button--list-item__checkmark"></div>
             </ons-col>
-            <ons-col>{{item.name}}</ons-col>
-          </ons-list-item>
-        </ons-list>
-      </div>
+            <ons-col width="40%">
+              <img ng-show="!!item.icon" ng-src="{{item.icon}}" />
+            </ons-col>
+            <ons-col width="50%">
+              {{item.name}}
+            </ons-col>
+          </ons-row>
+        </ons-list-item>
+      </ons-list>
 
     </ons-page>
   </ons-template>

@@ -18,9 +18,10 @@ var storage_manager_records: StorageManager = new StorageManager(STORAGE_TYPE.TR
     });
 
     // 全体で使用する汎用定義など
-    module.controller("RootController", function($scope){
+    module.controller("RootController", function($scope, masterManager){
       $scope.sharing = {};
       $scope.sharing["hide_tabbar"] = false;
+      $scope.sharing["root_machine"] = masterManager.Machines.getDefaultRecord();
 
       // const定義のlabelたちをセット
       $scope.labels = {};

@@ -101,6 +101,16 @@
                     return ["id", "name", "icon", "purchase_date", "purchase_price", "odd_meter", "is_main"];
                 }
             },
+            setDefault: function (id) {
+                // まずは1件対象を取得
+                var machine = _sm_machine.getItem(id);
+                if (!machine) {
+                    console.log("no data...");
+                    return;
+                }
+                // あったら、ここでデフォルトフラグをたてる
+                machine.is_main = true;
+            },
             registRecord: function (value) {
                 var err_list = [];
                 var if_return = new IFRETURN();

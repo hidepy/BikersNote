@@ -13,11 +13,15 @@
     // 機体情報を格納
     $scope.machines = masterManager.Machines.getRecords();//masterManager.getMachines();
 
+
     $scope.processItemSelect = function(index){
+      console.log("switch pushed");
+      $scope.sharing["root_machine"] = $scope.machines[index];
+
       
     };
 
 
   });
 
-});
+})();

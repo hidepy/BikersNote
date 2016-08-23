@@ -32,7 +32,6 @@
     "!./typings/**/*.ts"
   ],
   "files": [
-    "./www/imagePicker.ts",
     "./www/js/class/IFRETURN.ts",
     "./www/js/common/commonFunctions.ts",
     "./www/js/common/storageManager.ts",

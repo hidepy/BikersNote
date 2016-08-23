@@ -11,9 +11,10 @@ var storage_manager_records = new StorageManager(STORAGE_TYPE.TRAN_RECORDS);
         };
     });
     // 全体で使用する汎用定義など
-    module.controller("RootController", function ($scope) {
+    module.controller("RootController", function ($scope, masterManager) {
         $scope.sharing = {};
         $scope.sharing["hide_tabbar"] = false;
+        $scope.sharing["root_machine"] = masterManager.Machines.getDefaultRecord();
         // const定義のlabelたちをセット
         $scope.labels = {};
         for (var p in VIEW_LABELS) {
