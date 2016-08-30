@@ -4,11 +4,31 @@
 
 <!--
 
+
+  2016/08/30
+    TOOD
+      画像を複数選択させるか？
+
+      メンテナンストラップ
+
+      viewを大/中, 機体, 日付によって絞込できるように
+      ソートを指定できるように
+
+      中分類マスタの編集ができるように -> 継承しないとかなりださいことになるんで...保留
+        マスタごとに紐づく
+          固定項目はある
+      大分類は固定
+        Custom, Maintainance, NMP, Touring, Purchase, Others
+
+      機体マスタ, 分類マスタの他に、トラップマスタが必要
+
+
   2016/08/16
     画像選択を部品化する
 
   2016/07/12
     tabbarなんか嫌なんで、wikidiverと同様にtopかmenuからいけるかんじにしよう
+      ok
 
   glot, jqplotなどがチャート
     何に使うか？
@@ -283,7 +303,7 @@
 
 
 <!--
-  ★★★★★ need maintainance state ★★★★★
+  ★★★★★ maintainance state ★★★★★
 -->
   <ons-template id="maintainance_state.html">
     <ons-page ng-controller="MaintainanceStateController">
@@ -361,18 +381,24 @@
       </ons-toolbar>
 
       <ons-list>
-        <ons-list-item modifier="chevron" class="item" ng-click="move2MachineView()">
+        <ons-list-item modifier="chevron" class="item" ng-click="move2HeaderView('Machines')">
           {{mlabels.MSTR_MACHINE_VIEW}}
         </ons-list-item>
-        <ons-list-item modifier="chevron" class="item" ng-click="move2TypeView()">
-          {{mlabels.MSTR_BUNRUI_VIEW}}
+        <ons-list-item modifier="chevron" class="item" ng-click="move2HeaderView('DBunrui')">
+          d bunrui
+        </ons-list-item>
+        <ons-list-item modifier="chevron" class="item" ng-click="move2HeaderView('CBunrui')">
+          c bunrui
+        </ons-list-item>
+        <ons-list-item modifier="chevron" class="item" ng-click="move2HeaderView('Trap')">
+          trap screen
         </ons-list-item>
       </ons-list>
 
     </ons-page>
   </ons-template>
 
-  <ons-template id="master_machine_header.html">
+  <ons-template id="master_header.html">
     <ons-page ng-controller="MasterMachineHeader">
 
       <ons-toolbar>
@@ -389,7 +415,6 @@
         <ons-list-header>{{mlabels.MACHINE_LIST}}</ons-list-header>
         <ons-list-item modifier="chevron" class="item" ng-repeat="item in machines track by $index" ng-click="move2MachineDetailView($index, $event)">
           <ons-row>
-            <!-- <ons-col>{{item.id}}</ons-col> -->
             <ons-col>{{item.name}}</ons-col>
           </ons-row>
         </ons-list-item>
@@ -398,7 +423,7 @@
     </ons-page>
   </ons-template>
 
-  <ons-template id="master_machine_detail.html">
+  <ons-template id="master_detail.html">
     <ons-page ng-controller="MasterMachineDetail">
 
       <ons-toolbar>
@@ -474,6 +499,12 @@
       </ons-list>
     </ons-page>
   </ons-template>
+
+
+
+
+
+
 
 </body>
 </html>

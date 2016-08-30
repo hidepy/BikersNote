@@ -20,6 +20,7 @@
         }
     ];
     module.service("masterManager", function () {
+        // ここ本当は継承すべきなんだけど...
         this.DBunrui = {
             getSelection: function () {
                 console.log("in DBunrui.getSelection");

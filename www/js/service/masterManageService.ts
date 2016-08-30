@@ -23,6 +23,8 @@
 
   module.service("masterManager", function(){
 
+    // ここ本当は継承すべきなんだけど...
+
     this.DBunrui = {
       getSelection: function(): I_MasterDBunrui[]{
         console.log("in DBunrui.getSelection");

@@ -4,31 +4,61 @@
 (function () {
     'user strict';
     var module = angular.module(APP_CONFIGS.NAME); //第2引数省略 既存モジュールに追加
+    // ★★★★ Masterの第一画面用コントローラ ★★★★
     module.controller("MasterController", function ($scope) {
         console.log("in SettingsController");
-        $scope.move2MachineView = function (index, event) {
-            myNavigator.pushPage("master_machine_header.html");
-        };
-        $scope.move2TypeView = function (index, event) {
-            myNavigator.pushPage("master_type_header.html");
+        $scope.move2MachineView = function (type) {
+            myNavigator.pushPage("master_header.html", {
+                onTransitionEnd: {
+                    is_machine: (type == "Machines"),
+                    is_d_bunrui: (type == "DBunrui"),
+                    is_c_bunrui: (type == "CBunrui"),
+                    is_trap: (type == "Trap"),
+                    type_name: type
+                }
+            });
         };
     });
+    // ★★★ Master機体画面用コントローラ(一覧) ★★★
+    // ⇒ Master共通にしよう...一生おわらんわ
     // header, detail
     module.controller("MasterMachineHeader", function ($scope, masterManager) {
         console.log("in MasterMachineHeader");
-        $scope.machines = masterManager.Machines.getRecords(); //masterManager.getMachines();
+        //$scope.machines = masterManager.Machines.getRecords();//masterManager.getMachines();
+        $scope.items = [];
+        $scope.is_machine = false;
+        $scope.is_d_bunrui = false;
+        $scope.is_c_bunrui = false;
+        $scope.is_trap = false;
+        // 画面への引数を取得
+        var args = myNavigator.getCurrentPage().options;
+        if (args.onTransitionEnd) {
+            $scope.is_machine = args.onTransitionEnd.is_machine;
+            $scope.is_d_bunrui = args.onTransitionEnd.is_d_bunrui;
+            $scope.is_c_bunrui = args.onTransitionEnd.is_c_bunrui;
+            $scope.is_trap = args.onTransitionEnd.is_trap;
+            $scope.items = masterManager[args.onTransitionEnd.type_name].getRecords(); // 全オブジェクトには最低getRecordsが必要
+        }
         $scope.move2MachineDetailRegist = function () {
-            myNavigator.pushPage("master_machine_detail.html", {
+            myNavigator.pushPage("master_detail.html", {
                 onTransitionEnd: {
+                    is_machine: $scope.is_machine,
+                    is_d_bunrui: $scope.is_type,
+                    is_c_bunrui: $scope.is_c_bunrui,
+                    is_trap: $scope.is_trap,
                     is_regist: true
                 }
             });
         };
         $scope.move2MachineDetailView = function (index, event) {
-            myNavigator.pushPage("master_machine_detail.html", {
+            myNavigator.pushPage("master_detail.html", {
                 onTransitionEnd: {
+                    is_machine: $scope.is_machine,
+                    is_d_bunrui: $scope.is_type,
+                    is_c_bunrui: $scope.is_c_bunrui,
+                    is_trap: $scope.is_trap,
                     is_view: true,
-                    item: $scope.machines[index]
+                    item: $scope.items[index]
                 }
             });
         };
@@ -96,6 +126,7 @@
             outlog(target_model);
         };
     });
+    // ★★★ Master分類画面用コントローラ(一覧) ★★★
     // header, detail
     module.controller("MasterTypeHeader", function ($scope) {
         console.log("in MasterTypeHeader");
