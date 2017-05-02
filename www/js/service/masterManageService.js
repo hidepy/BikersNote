@@ -22,6 +22,12 @@
     module.service("masterManager", function () {
         // ここ本当は継承すべきなんだけど...
         this.DBunrui = {
+            getRecords: function () {
+                return convHash2Arr(_sm_dbunrui.getAllItem());
+            },
+            getRecord: function (id) {
+                return _sm_dbunrui.getItem(id);
+            },
             getSelection: function () {
                 console.log("in DBunrui.getSelection");
                 var res = [];
@@ -37,6 +43,12 @@
             }
         };
         this.CBunrui = {
+            getRecords: function () {
+                return convHash2Arr(_sm_cbunrui.getAllItem());
+            },
+            getRecord: function (id) {
+                return _sm_cbunrui.getItem(id);
+            },
             getSelection: function (as_raw, dbunrui) {
                 console.log("in CBunrui.getSelection");
                 var res = [];
@@ -55,6 +67,17 @@
                     }
                 }
                 return res;
+            },
+            getLastId: function () {
+                var last_item = getMaxItemFromHash(_sm_cbunrui, "id", true); // 最大のidを持つ要素を返却する
+                if (last_item) {
+                    return last_item.id;
+                }
+                return "0";
+            },
+            add: function (d_bunrui, c_bunrui_name) {
+                var max_idx = "" + (Number(this.getLastId()) + 1);
+                _sm_cbunrui.saveItem2Storage(max_idx, c_bunrui_name);
             }
         };
         this.Machines = {

@@ -3,6 +3,20 @@
 /*
 	★★★ プロジェクト内共通　★★★
 */
+function getMaxItemFromHash(h: any, comp_prop: string, comp_as_string: boolean){
+	var max_idx = -1;
+	var max_val = comp_as_string ? "0" : 0;
+	let list = convHash2Arr(h);
+	for(var i = 0; i < list.length; i++){
+		if(max_val < list[i][comp_prop]){
+			max_val = list[i][comp_prop];
+			max_idx = i;
+		}
+	}
+
+	return list[max_idx];
+}
+
 /* 安全にpoppageする. 戻り先がない場合はhomeに戻る */
 function popPageSafe(nav: NavigatorView){
 	if((<any>nav).canPopPage()){

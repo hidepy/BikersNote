@@ -12,7 +12,7 @@
   module.controller("MasterController", function($scope){
     console.log("in SettingsController");
 
-    $scope.move2MachineView = function(type){
+    $scope.move2HeaderView = function(type){
       myNavigator.pushPage("master_header.html", {
         onTransitionEnd: {
           is_machine: (type == "Machines"),

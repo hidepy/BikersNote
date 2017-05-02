@@ -19,10 +19,10 @@
 
 
 
-$scope._showdata = function(){
-  console.log("in showdata. bkinfo=");
-  console.log($scope.sharing.root_machine);
-}
+      $scope._showdata = function(){
+        console.log("in showdata. bkinfo=");
+        console.log($scope.sharing.root_machine);
+      }
 
 
 
@@ -54,11 +54,13 @@ $scope._showdata = function(){
         };
 
         let act = action_types[type];
-        if     (act.url){ myNavigator.pushPage(act.url); }
-        else if(act.action){ act.action(); }
-
+        if(act.url){
+          myNavigator.pushPage(act.url);
+        }
+        else if(act.action){
+          act.action();
+        }
       }
-
   });
 
 })();
