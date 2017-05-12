@@ -68,7 +68,7 @@
     <script src="js/service/recordManageService.js"></script>
     <script src="js/service/masterManageService.js"></script>
 
-<script src="js/directive/imagePicker.js"></script>
+    <script src="js/directive/imagePicker.js"></script>
 
     <script src="js/controller/homeController.js"></script>
     <script src="js/controller/recordController.js"></script>
@@ -79,6 +79,9 @@
 
 
     <style>
+    body{
+      opacity: 0.3;
+    }
     .label_area{
         width: 20%;
         overflow: hidden;
@@ -133,10 +136,6 @@
   I'm in imagePickerDirective
 </div>
 
-<div first-directive>
-  I'm in firstDirective
-</div>
-
 <!--
 
 レコード1件追加
@@ -146,48 +145,16 @@
 機体照会/切替
 マスタ照会
 メモ
-
 -->
-
         <ons-row>
-          <ons-col>
-            <ons-button modifier="large--quiet" ng-click="move2functions('1')">
-              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
-              <p>add record</p>
-            </ons-button>
-          </ons-col>
-          <ons-col>
-            <ons-button modifier="large--quiet" ng-click="move2functions('2')">
-              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
-              <p>view</p>
-            </ons-button>
-          </ons-col>
-          <ons-col>
-            <ons-button modifier="large--quiet" ng-click="move2functions('3')">
-              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
-              <p>state</p>
-            </ons-button>
-          </ons-col>
+          <menu-button buttonlabel="AddRecord" action="move2functions('1')"></menu-button>
+          <menu-button buttonlabel="ViewRecords" action="move2functions('2')"></menu-button>
+          <menu-button buttonlabel="CheckState" action="move2functions('3')"></menu-button>
         </ons-row>
         <ons-row>
-          <ons-col>
-            <ons-button modifier="large--quiet"  ng-click="move2functions('4')">
-              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
-              <p>switch</p>
-            </ons-button>
-          </ons-col>
-          <ons-col>
-            <ons-button modifier="large--quiet" ng-click="move2functions('5')">
-              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
-              <p>master</p>
-            </ons-button>
-          </ons-col>
-          <ons-col>
-            <ons-button modifier="large--quiet" ng-click="move2functions('6')">
-              <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>
-              <p>memo</p>
-            </ons-button>
-          </ons-col>
+          <menu-button buttonlabel="Switch" action="move2functions('4')"></menu-button>
+          <menu-button buttonlabel="Master" action="move2functions('5')"></menu-button>
+          <menu-button buttonlabel="MEMO" action="move2functions('6')"></menu-button>
         </ons-row>
 
         <ons-button modifier="quiet" ng-click='delete_all_records()'>DELETE ALL DATA(DANGEEEEEERRRR!!)</ons-button>
@@ -297,7 +264,6 @@
         <ons-button modifier="quiet large" ng-show="is_view" ng-click="move2RecordEdit()">{{labels.EDIT_BUTTON}}</ons-button>
         <ons-button modifier="quiet large" ng-hide="is_view" ng-click="processRegist()">{{UPDATE_BUTTON_NAME}}</ons-button>
         <ons-button modifier="large" ng-show="is_modify" ng-click="processDelete()">{{labels.DELETE_BUTTON}}</ons-button>
-
 
       </ons-page>
   </ons-template>
