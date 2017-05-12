@@ -4,16 +4,19 @@
 (function(){
   'use strict';
 
-  var module = angular.module(APP_CONFIGS.NAME); //第2引数省略 既存モジュール拡張
-
-  module.controller("ViewRecordHeaderController", function($scope, recordManager){
+  angular.module(APP_CONFIGS.NAME) //第2引数省略 既存モジュール拡張
+    .controller("ViewRecordHeaderController", function($scope, recordManager, masterManager){
 
       //整備情報レコード
       $scope.items = [];
-      $scope.items = recordManager.getRecords();
+      if(){
+        $scope.items = recordManager.getRecords();
+      }
+      else if(){
+
+      }
       // 削除用
       $scope.del_targets = { items: [] };
-
       //削除フェーズか
       $scope.is_delete_phase = false;
 
@@ -26,9 +29,6 @@
               }
           });
       };
-
-
-
 
       // trashを押下した時
       $scope.pushTrash = function(){
@@ -45,9 +45,6 @@
             // 処理成功の場合
             $scope.del.items = [];
           }
-
-
-
       };
 
       $scope.checkAll = function() {
@@ -62,10 +59,8 @@
           $scope.del.items = [];
       };
 
-  });
-
-
-  module.controller("ViewRecordDetailController", function($scope, selectList, recordManager, masterManager){
+  })
+  .controller("ViewRecordDetailController", function($scope, selectList, recordManager, masterManager){
       outlog("in ViewRecordDetailController");
 
       $scope.record = {};

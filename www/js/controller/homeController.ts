@@ -19,7 +19,6 @@
                   '    <p>{{buttonlabel}}</p>' +
                   '  </ons-button>' +
                   '</ons-col>'
-
       }
     })
     .controller("HomeController", function($scope, masterManager){
@@ -33,14 +32,10 @@
       // tabbar可視性
       $scope.sharing.hide_tabbar = false;
 
-
-
       $scope._showdata = function(){
         console.log("in showdata. bkinfo=");
         console.log($scope.sharing.root_machine);
       }
-
-
 
       $scope.movetoViewRecordHeader = function(){
           outlog("in movetoViewRecordHeader");

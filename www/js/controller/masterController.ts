@@ -7,14 +7,15 @@
 
   var module = angular.module(APP_CONFIGS.NAME); //第2引数省略 既存モジュールに追加
 
-
   // ★★★★ Masterの第一画面用コントローラ ★★★★
   module.controller("MasterController", function($scope){
     console.log("in SettingsController");
 
     $scope.move2HeaderView = function(type){
-      myNavigator.pushPage("master_header.html", {
+      //myNavigator.pushPage("master_header.html", {
+      myNavigator.pushPage("view_record_header_page.html", {
         onTransitionEnd: {
+          is_master: true,
           is_machine: (type == "Machines"),
           is_d_bunrui: (type == "DBunrui"),
           is_c_bunrui: (type == "CBunrui"),
