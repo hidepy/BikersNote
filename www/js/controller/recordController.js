@@ -1,27 +1,58 @@
 /*
   maintainceレコードの照会/更新系コントローラ
+  ⇒全てのデータの一覧照会などを担う
+
+  2017/05/23
+  1本化する
 */
 (function () {
     'use strict';
     angular.module(APP_CONFIGS.NAME) //第2引数省略 既存モジュール拡張
         .controller("ViewRecordHeaderController", function ($scope, recordManager, masterManager) {
-        //整備情報レコード
-        $scope.items = [];
-        if () {
-            $scope.items = recordManager.getRecords();
+        // 画面表示には、
+        /*
+        {
+        id, title, opt1, opt2, opt3
         }
-        else if () {
+        の項目を表示するのでこれに合わせる事。すべて
+        */
+        var args = myNavigator.getCurrentPage().options;
+        // 次ページの遷移先
+        var next_page_url = "view_record_detail_page.html";
+        //type別recordを取得
+        $scope.items_disp = []; // 表示用. 方針としては、1件選択⇒キーを拾って詳細へ
+        // 前画面からのtypeによって、データソースを変える
+        if (args.record_type && (args.record_type == "maintainance")) {
+            $scope.items_disp = recordManager.getDispRecords();
+        }
+        else if (args.record_type && (args.record_type == "master_typelist")) {
+            $scope.items_disp = [
+                { id: "master_machine", title: "MACHINE", next_record_type: "master_machine" },
+                { id: "master_dbunrui", title: "D_BUNRUI", next_record_type: "master_dbunrui" },
+                { id: "master_cbunrui", title: "C_BUNRUI", next_record_type: "master_cbunrui" }
+            ];
+            // 次ページも自身のページを表示する
+            next_page_url = "view_record_header_page.html";
+        }
+        else if (args.record_type && (args.record_type == "master_machine")) {
+            $scope.items_disp = masterManager.Machines.getDispRecords();
+        }
+        else if (args.record_type && (args.record_type == "master_dbunrui")) {
+            $scope.items_disp = masterManager.D_BUNRUI.getDispRecords();
+        }
+        else if (args.record_type && (args.record_type == "master_tbunrui")) {
+            $scope.items_disp = masterManager.C_BUNRUI.getDispRecords();
         }
         // 削除用
         $scope.del_targets = { items: [] };
         //削除フェーズか
         $scope.is_delete_phase = false;
         $scope.processItemSelect = function (index, event) {
-            myNavigator.pushPage('view_record_detail_page.html', {
-                onTransitionEnd: {
-                    item: $scope.items[index],
-                    is_view: true
-                }
+            // 次ページへ遷移
+            myNavigator.pushPage(next_page_url, {
+                record_type: $scope.items_disp[index].next_record_type,
+                id: $scope.items_disp[index].id,
+                before_record_type: args.record_type
             });
         };
         // trashを押下した時
@@ -49,7 +80,6 @@
         };
     })
         .controller("ViewRecordDetailController", function ($scope, selectList, recordManager, masterManager) {
-        outlog("in ViewRecordDetailController");
         $scope.record = {};
         $scope.is_entry = false;
         $scope.is_modify = false;
@@ -61,31 +91,47 @@
         };
         //前画面からの引数取得
         var args = myNavigator.getCurrentPage().options;
-        if (args && args.onTransitionEnd) {
-            //詳細ページから編集を押下してきた場合
-            if (args.onTransitionEnd.is_modify) {
-                console.log("is edit screen");
-                // 訂正画面フラグ on
+        /* この画面は
+        menu-> 登録として
+        list-> 照会として
+        detail-> 更新/削除として
+        の入り口がある
+        */
+        if (args) {
+            // 画面タイプを判断
+            if (args.is_modify) {
                 $scope.is_modify = true;
                 // ボタンラベルを更新
                 $scope.UPDATE_BUTTON_NAME = VIEW_LABELS.UPDATE_BUTTON;
             }
-            else if (args.onTransitionEnd.is_view) {
-                console.log("is view screen");
-                // 照会画面フラグ on
+            else if (args.is_view) {
                 $scope.is_view = true;
             }
-            if (args.onTransitionEnd.item) {
-                $scope.record = args.onTransitionEnd.item; //整備情報を取得(前画面からの情報まんまでよいか？)
+            else {
+                $scope.is_entry = true;
             }
+            var getData = {
+                "maintainance": {
+                    getRecord: recordManager.getRecord,
+                    getProperty: recordManager.getRecordsProperty
+                },
+                "master_machine": {
+                    getRecord: masterManager.Machines.getRecord,
+                    getProperty: masterManager.Machines.getRecordsProperty
+                },
+                "master_dbunrui": {
+                    getRecord: masterManager.DBunrui.getRecord,
+                    getProperty: masterManager.DBunrui.getProperty
+                },
+                "master_cbunrui": {
+                    getRecord: masterManager.CBunrui.getRecord,
+                    getProperty: masterManager.CBunrui.getProperty
+                }
+            };
+            // 表示データと型定義を取得する
+            $scope.record = args.id ? getData[args.before_record_type].getRecord(args.id) : {};
+            $scope.properties = getData[args.before_record_type].getProperty(true);
         }
-        else {
-            console.log("is entry screen");
-            // record登録画面の場合
-            $scope.is_entry = true;
-        }
-        // 型定義を取得
-        $scope.properties = recordManager.getRecordsProperty(true);
         // 更新画面へ遷移
         $scope.move2RecordEdit = function () {
             myNavigator.pushPage('view_record_detail_page.html', {
@@ -95,12 +141,14 @@
                 }
             });
         };
+        // 登録処理
         $scope.processRegist = function () {
             console.log("in processRegist");
             var item = $scope.record;
             // Record 1件追加
             handleIfreturn(recordManager.registRecord(item), myNavigator);
         };
+        // 削除処理
         $scope.processDelete = function () {
             var res = storage_manager_records.deleteItem($scope.record.id);
             var msg = res ? CONST_MESSAGES.DELETE_SUCCESS : CONST_MESSAGES.UPDATE_FAILURE;

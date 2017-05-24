@@ -4,14 +4,8 @@
 var storage_manager_records = new StorageManager(STORAGE_TYPE.TRAN_RECORDS);
 (function () {
     'use strict';
-    var module = angular.module(APP_CONFIGS.NAME, ['onsen']); //新規モジュールを定義
-    module.directive('firstDirective', function () {
-        return {
-            template: '<span>初めてのディレクティブ</span>'
-        };
-    });
-    // 全体で使用する汎用定義など
-    module.controller("RootController", function ($scope, masterManager) {
+    angular.module(APP_CONFIGS.NAME, ['onsen']) //新規モジュールを定義
+        .controller("RootController", function ($scope, masterManager) {
         $scope.sharing = {};
         $scope.sharing["hide_tabbar"] = false;
         $scope.sharing["root_machine"] = masterManager.Machines.getDefaultRecord();
@@ -28,7 +22,6 @@ var storage_manager_records = new StorageManager(STORAGE_TYPE.TRAN_RECORDS);
         for (var p in VIEW_LABELS_MASTER) {
             $scope.mlabels[p] = VIEW_LABELS_MASTER[p];
         }
-        //$scope.direct = "I'm direct prop"; //これもok
         $scope.delete_all_records = function () {
             storage_manager_records.deleteAllItem();
         };

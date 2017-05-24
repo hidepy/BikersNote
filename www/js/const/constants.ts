@@ -44,6 +44,7 @@ namespace VIEW_LABELS{
 }
 // マスタ専用 数が増える見込みなので
 namespace VIEW_LABELS_MASTER{
+
   //設定マスタヘッダタイトル
   export const MSTR_MACHINE_VIEW = "機体一覧";
   export const MSTR_BUNRUI_VIEW = "分類一覧";
@@ -51,12 +52,16 @@ namespace VIEW_LABELS_MASTER{
   export const MACHINE_SIGN_UP_BUTTON = "登録";
   export const MACHINE_LIST = "一覧";
 
+  // COL共通
+  export const COL_NAME = "名称";
+
   export const COL_MACHINE = "機体名";
   export const COL_HOME_IMG = "アイコン画像";
   export const COL_PRCS_DATE = "購入日付";
   export const COL_RPCS_PRICE = "購入価格";
   export const COL_CURR_ODD = "現在の走行距離";
   export const COL_MAIN_FLG = "メインの機体にする";
+
 }
 
 namespace SELECT_LIST_TYPES{

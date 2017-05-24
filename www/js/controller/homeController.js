@@ -4,61 +4,40 @@
 (function () {
     'use strict';
     angular.module(APP_CONFIGS.NAME) //第2引数省略 既存モジュール拡張
-        .directive("menuButton", function () {
-        return {
-            restrict: "E",
-            replace: true,
-            scope: {
-                buttonlabel: "@",
-                action: "&"
-            },
-            template: '<ons-col>' +
-                '  <ons-button modifier="large--quiet" ng-click="action()">' +
-                '    <ons-icon icon="" style="font-size: 28px; width: 1em;"></ons-icon>' +
-                '    <p>{{buttonlabel}}</p>' +
-                '  </ons-button>' +
-                '</ons-col>'
-        };
-    })
         .controller("HomeController", function ($scope, masterManager) {
-        // デフォルト機体を取得
-        //$scope.data = masterManager.Machines.getDefaultRecord();
-        //$scope.data = $scope.sharing["root_machine"];
+        // Button 押下時の動作定義
+        var action_types = {
+            // 新規追加
+            "1": { url: "view_record_detail_page.html", options: { record_type: "maintainance" } },
+            // レコード一覧
+            "2": { url: "view_record_header_page.html", options: { record_type: "maintainance" } },
+            // トラップ画面
+            "3": { url: "maintainance_state.html", options: { record_type: "state" } },
+            // 切り替え
+            "4": { url: "switch_machine.html", options: {} },
+            // マスタ管理
+            "5": { url: "view_record_header_page.html", options: { record_type: "master_typelist" } },
+            // メモ
+            "6": { action: function () {
+                    console.log("memo pushed");
+                }
+            }
+        };
         $scope.visibility = {};
         $scope.visibility.dbg_disp_area = "inline";
         // tabbar可視性
         $scope.sharing.hide_tabbar = false;
-        $scope._showdata = function () {
-            console.log("in showdata. bkinfo=");
-            console.log($scope.sharing.root_machine);
-        };
         $scope.movetoViewRecordHeader = function () {
             outlog("in movetoViewRecordHeader");
             myNavigator.pushPage("view_record_header_page.html");
         };
-        /*
-              $scope.getMachine = function(id: string){
-                $scope.data = masterManager.Machines.getRecord(id);
-                console.log("in getMachine");
-                outlog($scope.data);
-              };
-        */
         $scope.move2functions = function (type) {
             console.log("in move2functions. type=" + type);
-            var action_types = {
-                "1": { url: "view_record_detail_page.html", options: {} },
-                "2": { url: "view_record_header_page.html", options: {} },
-                "3": { url: "maintainance_state.html", options: {} },
-                "4": { url: "switch_machine.html" },
-                "5": { url: "master.html", options: {} },
-                "6": { action: function () {
-                        console.log("memo pushed");
-                    }
-                }
-            };
+            // actionを受ける
             var act = action_types[type];
+            // propertyによって、画面遷移かイベントかを決定する
             if (act.url) {
-                myNavigator.pushPage(act.url);
+                myNavigator.pushPage(act.url, act.options);
             }
             else if (act.action) {
                 act.action();

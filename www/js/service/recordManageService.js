@@ -6,9 +6,27 @@
     var module = angular.module(APP_CONFIGS.NAME); //第2引数省略 既存モジュール拡張
     var _sm = new StorageManager(STORAGE_TYPE.TRAN_RECORDS);
     module.service("recordManager", function () {
+        var _this = this;
+        // idからレコード取得
+        this.getRecord = function (id) {
+            return _sm.getItem(id);
+        };
+        // 全件取得
         this.getRecords = function () {
             outlog("in getRecords");
-            return convHash2Arr(_sm.getAllItem());
+            return convHash2Arr(_sm.getAllItem()) || [];
+        };
+        // リスト表示用に整形
+        this.getDispRecords = function () {
+            return _this.getRecords().map(function (v) {
+                return {
+                    id: v.id,
+                    title: v.title,
+                    opt1: v.bike,
+                    opt2: v.d_bunrui,
+                    opt3: v.c_bunrui
+                };
+            });
         };
         this.getRecordsProperty = function (with_type) {
             if (with_type) {

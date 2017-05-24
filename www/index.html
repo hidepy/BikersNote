@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="app"> <!-- ※※※※※※ これ！！大丈夫か？？？？固定値になっているはずだが※※※※※※ -->
+<html lang="en"> <!-- ※※※※※※ これ！！大丈夫か？？？？固定値になっているはずだが※※※※※※ -->
 <head>
 
 <!--
@@ -60,24 +60,6 @@
     <script src="js/common/commonFunctions.js"></script>
     <script src="js/common/storageManager.js"></script>
 
-    <script src="js/class/IFRETURN.js"></script>
-
-    <script src="cordova.js"></script>
-    <script src="js/main.js"></script>
-
-    <script src="js/service/recordManageService.js"></script>
-    <script src="js/service/masterManageService.js"></script>
-
-    <script src="js/directive/imagePicker.js"></script>
-
-    <script src="js/controller/homeController.js"></script>
-    <script src="js/controller/recordController.js"></script>
-    <script src="js/controller/selectListController.js"></script>
-    <script src="js/controller/switchMasterController.js"></script>
-    <script src="js/controller/masterController.js"></script>
-    <script src="js/controller/maintainanceStateController.js"></script>
-
-
     <style>
     body{
       opacity: 0.3;
@@ -124,55 +106,23 @@
               <div class="profile-purcase_date">{{sharing.root_machine.purchace_date}}</div>
           </div>
 
-<ons-button ng-click="_showdata()">showdata</ons-button>
+          <ons-row>
+            <menu-button buttonlabel="AddRecord" action="move2functions('1')"></menu-button>
+            <menu-button buttonlabel="ViewRecords" action="move2functions('2')"></menu-button>
+            <menu-button buttonlabel="CheckState" action="move2functions('3')"></menu-button>
+          </ons-row>
+          <ons-row>
+            <menu-button buttonlabel="Switch" action="move2functions('4')"></menu-button>
+            <menu-button buttonlabel="Master" action="move2functions('5')"></menu-button>
+            <menu-button buttonlabel="MEMO" action="move2functions('6')"></menu-button>
+          </ons-row>
 
-<!--
-          <div>
-            <ons-button ng-click="getMachine('20160628104436')">update view</ons-button>
-          </div>
--->
-
-<div image-picker-directive>
-  I'm in imagePickerDirective
-</div>
-
-<!--
-
-レコード1件追加
-レコード照会
-自機体のメンテ状況照会->トラップ
-
-機体照会/切替
-マスタ照会
-メモ
--->
-        <ons-row>
-          <menu-button buttonlabel="AddRecord" action="move2functions('1')"></menu-button>
-          <menu-button buttonlabel="ViewRecords" action="move2functions('2')"></menu-button>
-          <menu-button buttonlabel="CheckState" action="move2functions('3')"></menu-button>
-        </ons-row>
-        <ons-row>
-          <menu-button buttonlabel="Switch" action="move2functions('4')"></menu-button>
-          <menu-button buttonlabel="Master" action="move2functions('5')"></menu-button>
-          <menu-button buttonlabel="MEMO" action="move2functions('6')"></menu-button>
-        </ons-row>
-
-        <ons-button modifier="quiet" ng-click='delete_all_records()'>DELETE ALL DATA(DANGEEEEEERRRR!!)</ons-button>
+          <ons-button modifier="quiet" ng-click='delete_all_records()'>DELETE ALL DATA(DANGEEEEEERRRR!!)</ons-button>
 
       </ons-page>
   </ons-template>
 
-  <!-- 整備情報一覧ページ -->
-  <!--
-
-  要件：
-  ・最初にページを表示した場合、現在設定されているバイク情報に紐づく整備情報を時系列順で取得する
-
-  ・検索設定ボタンを押下することで、他の機体、分類ごとなどに検索ができる
-
-  ・リスト項目押下でメンテナンス詳細ページに遷移する
-
-  -->
+  <!-- record一覧ページ -->
   <ons-template id="view_record_header_page.html">
       <ons-page ng-controller="ViewRecordHeaderController">
 
@@ -197,7 +147,7 @@
         </ons-toolbar>
 
         <ons-list id="header_page_list">
-          <ons-list-item modifier="chevron" class="item" ng-repeat="item in items track by $index" ng-click="processItemSelect($index, $event)">
+          <ons-list-item modifier="chevron" class="item" ng-repeat="item in items_disp track by $index" ng-click="processItemSelect($index, $event)">
               <ons-row>
                 <ons-col width="40px" class="mark_box">
                     <label class='checkbox checkbox--list-item fade' ng-show="is_delete_phase" ng-click="$event.stopPropagation();">
@@ -208,8 +158,7 @@
                     <h2>{{item.title}}</h2>
                   </ons-col>
                   <ons-col class="header_page_list_others">
-                    <p><span>{{item.bike}}</span></p>
-                    <p><span>{{item.d_bunrui}}</span> > <span>{{item.c_bunrui}}</span></p>
+                    {{item.opt1}}:{{item.opt2}}:{{item.opt3}}
                   </ons-col>
               </ons-row>
           </ons-list-item>
@@ -224,7 +173,7 @@
       </ons-page>
   </ons-template>
 
-  <!-- 整備情報詳細ページ(読専) -->
+  <!-- record詳細ページ -->
   <ons-template id="view_record_detail_page.html">
       <ons-page ng-controller="ViewRecordDetailController">
 
@@ -268,203 +217,31 @@
       </ons-page>
   </ons-template>
 
+  <script src="js/class/IFRETURN.js"></script>
 
-<!--
-  ★★★★★ maintainance state ★★★★★
-  最終日がいつか、次はいつかとか
--->
-  <ons-template id="maintainance_state.html">
-    <ons-page ng-controller="MaintainanceStateController">
-      <ons-toolbar>
-        <div class="left"><ons-back-button>Back</ons-back-button></div>
-        <div class="center">MaintainanceState</div>
-      </ons-toolbar>
+  <script src="cordova.js"></script>
+  <script src="js/main.js"></script>
 
-      <div class="contents">
-        <div>
-          <h2>target: {{target_machine.name}}</h2>
-        </div>
+  <script src="js/service/recordManageService.js"></script>
+  <script src="js/service/masterManageService.js"></script>
 
-        <ons-list>
-          <ons-list-header>
-            <ons-row>
-              <ons-col width="20%">名称</ons-col>
-              <ons-col>next...</ons-col>
-            </ons-row>
-          </ons-list-header>
+  <script src="js/directive/imagePicker.js"></script>
+  <script src="js/directive/menuButton.js"></script>
 
-          <ons-list-item ng-repeat="cbunrui in cbunrui_of_maintainance">
-            <ons-row>
-              <ons-col width="20%">cbunrui.name</ons-col>
-              <ons-col>{{cbunrui.id| calcNextInterval}}</ons-col>
-            </ons-row>
-          </ons-list-item>
-        </ons-list>
+  <script src="js/controller/homeController.js"></script>
+  <script src="js/controller/recordController.js"></script>
+  <script src="js/controller/selectListController.js"></script>
+  <script src="js/controller/switchMasterController.js"></script>
+  <script src="js/controller/masterController.js"></script>
+  <script src="js/controller/maintainanceStateController.js"></script>
 
-      </div>
+  <script>
+  // angular drive!!
+  angular.element(document).ready(function () {
+    angular.bootstrap(document, [APP_CONFIGS.NAME]);
+  });
 
-    </ons-page>
-  </ons-template>
-
-  <!-- ★★★★ switch_machine.html ★★★★ -->
-  <ons-template id="switch_machine.html">
-    <ons-page ng-controller="SwitchMachineController">
-
-      <ons-toolbar>
-          <div class="left"><ons-back-button>Back</ons-back-button></div>
-          <div class="center">{{PAGE_TITLE}}</div>
-      </ons-toolbar>
-
-      <ons-list>
-        <ons-list-item ng-repeat="item in machines track by $index" ng-click="processItemSelect($index)" modifier="tappable" >
-          <ons-row>
-            <ons-col width="10%" >
-              <input type="radio" name="bunrui" /><div class="radio-button__checkmark radio-button--list-item__checkmark"></div>
-            </ons-col>
-            <ons-col width="40%">
-              <img ng-show="!!item.icon" ng-src="{{item.icon}}" />
-            </ons-col>
-            <ons-col width="50%">
-              {{item.name}}
-            </ons-col>
-          </ons-row>
-        </ons-list-item>
-      </ons-list>
-
-    </ons-page>
-  </ons-template>
-
-
-<!--
-  ★★★★★ Master ★★★★★
- -->
-  <ons-template id="master.html">
-    <ons-page ng-controller="MasterController">
-
-      <ons-toolbar>
-        <div class="left"><ons-back-button>Back</ons-back-button></div>
-        <div class="center">{{labels.TITLE_SETTINGS}}</div>
-      </ons-toolbar>
-
-      <ons-list>
-        <ons-list-item modifier="chevron" class="item" ng-click="move2HeaderView('Machines')">
-          {{mlabels.MSTR_MACHINE_VIEW}}
-        </ons-list-item>
-        <ons-list-item modifier="chevron" class="item" ng-click="move2HeaderView('DBunrui')">
-          d bunrui
-        </ons-list-item>
-        <ons-list-item modifier="chevron" class="item" ng-click="move2HeaderView('CBunrui')">
-          c bunrui
-        </ons-list-item>
-        <ons-list-item modifier="chevron" class="item" ng-click="move2HeaderView('Trap')">
-          trap screen
-        </ons-list-item>
-      </ons-list>
-
-    </ons-page>
-  </ons-template>
-
-  <ons-template id="master_header.html">
-    <ons-page ng-controller="MasterMachineHeader">
-
-      <ons-toolbar>
-          <div class="left"><ons-back-button>Back</ons-back-button></div>
-          <div class="center">{{labels.TITLE_DETAIL}}</div>
-      </ons-toolbar>
-
-      <ons-list>
-        <ons-list-header>{{mlabels.MACHINE_SIGN_UP}}</ons-list-header>
-        <ons-list-item>
-          <ons-button modifier="large quiet" ng-click="move2MachineDetailRegist()">{{mlabels.MACHINE_SIGN_UP_BUTTON}}</ons-button>
-        </ons-list-item>
-
-        <ons-list-header>{{mlabels.MACHINE_LIST}}</ons-list-header>
-        <ons-list-item modifier="chevron" class="item" ng-repeat="item in machines track by $index" ng-click="move2MachineDetailView($index, $event)">
-          <ons-row>
-            <ons-col>{{item.name}}</ons-col>
-          </ons-row>
-        </ons-list-item>
-      </ons-list>
-
-    </ons-page>
-  </ons-template>
-
-  <ons-template id="master_detail.html">
-    <ons-page ng-controller="MasterMachineDetail">
-
-      <ons-toolbar>
-          <div class="left"><ons-back-button>Back</ons-back-button></div>
-          <div class="center">{{PAGE_TITLE}}</div>
-      </ons-toolbar>
-
-      <ons-list>
-
-        <!-- めんどいんで、各項目は動的に生成しよう... -->
-        <ons-list-item ng-repeat="item in properties" ng-hide="item.no_disp">
-          <ons-row>
-            <ons-col>{{item.label}}<span ng-show="item.required" class="required_mark">*</ons-col>
-            <ons-col>
-              <span ng-hide="is_readonly">
-                <input ng-hide="item.not_normal" type="{{item.input_type}}" ng-model="machine[item.name]" />
-                <span ng-show="item.not_normal">
-                  <span ng-show="item.is_select">
-                    <ons-button ng-click="selectTest($event)" target-model="{{item.name}}">選択</ons-button><span>{{machine[item.name]}}</span>
-                    <!--<button ng-click="selectTest($event)" target-model="{{item.name}}">選択</button><span>{{machine[item.model]}}</span>-->
-                  </span>
-                  <span ng-show="item.is_img">
-                      picking!!
-                  </span>
-                </span>
-              </span>
-              <span ng-show="is_readonly">
-                <span ng-if="true">
-                  {{machine[item.name]}}
-                </span>
-                <span ng-if="false">
-                  <img ng-src="{{item.url}}" />
-                </span>
-              </span>
-            </ons-col>
-          </ons-row>
-        </ons-list-item>
-
-      </ons-list>
-
-      <ons-list>
-        <ons-list-item ng-hide="is_readonly">
-          <ons-button modifier="large quiet" ng-click="processRegist()">{{UPDATE_BUTTON_NAME}}</ons-button>
-        </ons-list-item>
-        <ons-list-item ng-show="is_edit_screen" >
-          <ons-button modifier="large quiet" ng-click="processDelete()">{{DELETE_BUTTON_NAME}}</ons-button>
-        </ons-list-item>
-        <ons-list-item ng-show="is_readonly">
-          <ons-button modifier="large quiet" ng-click="move2MachineDetailEdit()">{{EDIT_BUTTON_NAME}}</ons-button>
-        </ons-list-item>
-      </ons-list>
-
-    </ons-page>
-  </ons-template>
-
-
-
-  <ons-template id="master_type_header.html">
-    <ons-page ng-controller="MasterTypeHeader">
-
-      <ons-toolbar>
-          <div class="left"><ons-back-button>Back</ons-back-button></div>
-          <div class="center">{{labels.TITLE_DETAIL}}</div>
-      </ons-toolbar>
-
-      <ons-list>
-        <ons-list-item>
-          <ons-row>
-            <ons-col></ons-col>
-            <ons-col></ons-col>
-          </ons-row>
-        </ons-list-item>
-      </ons-list>
-    </ons-page>
-  </ons-template>
+  </script>
 
 </body>
 </html>

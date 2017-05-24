@@ -9,9 +9,27 @@
 
   module.service("recordManager", function(){
 
+    // idからレコード取得
+    this.getRecord = (id)=> {
+      return _sm.getItem(id);
+    };
+    // 全件取得
     this.getRecords = ()=> {
       outlog("in getRecords");
-      return convHash2Arr(_sm.getAllItem());
+      return convHash2Arr(_sm.getAllItem()) || [];
+    };
+
+    // リスト表示用に整形
+    this.getDispRecords = ()=>{
+      return this.getRecords().map(v=>{
+        return {
+          id: v.id,
+          title: v.title,
+          opt1: v.bike,
+          opt2: v.d_bunrui,
+          opt3: v.c_bunrui
+        }
+      });
     };
 
     this.getRecordsProperty = (with_type?: boolean): any=> {
