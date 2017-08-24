@@ -10,15 +10,15 @@
       // Button 押下時の動作定義
       let action_types = {
         // 新規追加
-        "1": { url: "view_record_detail_page.html", options: {record_type: "maintainance"} },
+        "1": { url: "view/view_record_detail_page.html", options: {record_type: "maintainance"} },
         // レコード一覧
-        "2": { url: "view_record_header_page.html", options: {record_type: "maintainance"} },
+        "2": { url: "view/view_record_header_page.html", options: {record_type: "maintainance"} },
         // トラップ画面
-        "3": { url: "maintainance_state.html", options: {record_type: "state"} },
+        "3": { url: "view/maintainance_state.html", options: {record_type: "state"} },
         // 切り替え
-        "4": { url: "switch_machine.html", options: {}},
+        "4": { url: "view/switch_machine.html", options: {}},
         // マスタ管理
-        "5": { url: "view_record_header_page.html", options: {record_type: "master_typelist"} },
+        "5": { url: "view/view_record_header_page.html", options: {record_type: "master_typelist"} },
         // メモ
         "6": { action: function(){
             console.log("memo pushed");

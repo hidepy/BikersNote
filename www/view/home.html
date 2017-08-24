@@ -1,0 +1,23 @@
+<ons-page ng-controller="HomeController">
+
+    <div class="profile-card">
+        <img src="images/profile-image-01.png" class="profile-image">
+        <div class="profile-name">{{sharing.root_machine.name}}</div>
+        <div class="profile-desc">{{sharing.root_machine.comment}}</div>
+        <div class="profile-purcase_date">{{sharing.root_machine.purchace_date}}</div>
+    </div>
+
+    <ons-row>
+      <menu-button buttonlabel="記録を追加" action="move2functions('1')"></menu-button>
+      <menu-button buttonlabel="記録を見る" action="move2functions('2')"></menu-button>
+      <menu-button buttonlabel="状態を見る" action="move2functions('3')"></menu-button>
+    </ons-row>
+    <ons-row>
+      <menu-button buttonlabel="マシンの切替" action="move2functions('4')"></menu-button>
+      <menu-button buttonlabel="マスタ管理" action="move2functions('5')"></menu-button>
+      <menu-button buttonlabel="メモ" action="move2functions('6')"></menu-button>
+    </ons-row>
+
+    <ons-button modifier="quiet" ng-click='delete_all_records()'>DELETE ALL DATA(DANGEEEEEERRRR!!)</ons-button>
+
+</ons-page>

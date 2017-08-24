@@ -1,0 +1,41 @@
+<ons-page ng-controller="ViewRecordDetailController">
+
+  <ons-toolbar>
+      <div class="left"><ons-back-button>Back</ons-back-button></div>
+      <div class="center">{{labels.TITLE_DETAIL}}</div>
+  </ons-toolbar>
+
+  <ons-list>
+    <ons-list-item ng-repeat="item in properties" ng-hide="item.no_disp">
+      <ons-row>
+        <ons-col>{{item.label}}<span ng-show="item.required" class="required_mark">*</ons-col>
+        <ons-col>
+          <span ng-hide="is_view">
+            <input ng-hide="item.not_normal" type="{{item.input_type}}" ng-model="record[item.name]" />
+            <span ng-show="item.not_normal">
+              <span ng-show="item.is_select">
+                <ons-button ng-click="showSelectList(item.name)">選択</ons-button><span>{{record[item.name]}}</span>
+              </span>
+              <span ng-show="item.is_img">
+                  <div imagePickerDirective="item.imagePickerArgs"></div>
+              </span>
+            </span>
+          </span>
+          <span ng-show="is_view">
+            <span ng-if="true">
+              {{record[item.name]}}
+            </span>
+            <span ng-if="false">
+              <img ng-src="{{item.url}}" />
+            </span>
+          </span>
+        </ons-col>
+      </ons-row>
+    </ons-list-item>
+  </ons-list>
+
+  <ons-button modifier="quiet large" ng-show="is_view" ng-click="move2RecordEdit()">{{labels.EDIT_BUTTON}}</ons-button>
+  <ons-button modifier="quiet large" ng-hide="is_view" ng-click="processRegist()">{{UPDATE_BUTTON_NAME}}</ons-button>
+  <ons-button modifier="large" ng-show="is_modify" ng-click="processDelete()">{{labels.DELETE_BUTTON}}</ons-button>
+
+</ons-page>

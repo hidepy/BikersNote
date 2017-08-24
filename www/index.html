@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"> <!-- ※※※※※※ これ！！大丈夫か？？？？固定値になっているはずだが※※※※※※ -->
+<html lang="en">
 <head>
 
 <!--
@@ -48,179 +48,62 @@
 
     <title>Biker's Note</title>
 
-    <link rel="stylesheet" href="lib/onsen/css/onsenui.css">
-    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css">
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css" />
+    <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/home.css" />
 
+    <!-- Angular core -->
     <script src="lib/onsen/js/angular/angular.js"></script>
     <script src="lib/onsen/js/onsenui.js"></script>
+    <script src="lib/onsen/js/angular-onsenui.js"></script>
 
     <script src="js/const/constants.js"></script>
 
     <script src="js/common/commonFunctions.js"></script>
     <script src="js/common/storageManager.js"></script>
 
-    <style>
-    body{
-      opacity: 0.3;
-    }
-    .label_area{
-        width: 20%;
-        overflow: hidden;
-    }
-    .header_page_list_title{
+    <script src="js/main.js"></script>
 
-    }
-    .header_page_list_others > p{
-      margin-top: 4px;
-      margin-bottom: 4px;
-    }
-    .required_mark{
-      color: red;
-      font-size: 120%;
-    }
-    .parts_image_picker{
-
-    }
-    </style>
 </head>
 
-<body ng-controller="RootController">
+<body ng-controller="RootController" ng-init="root_init()">
 
-<ons-navigator var="myNavigator" page="home.html"></ons-navigator>
+  <!-- Entry View Page -->
+  <ons-navigator var="myNavigator" page="view/home.html"></ons-navigator>
 
-  <ons-template id="home.html">
-      <ons-page ng-controller="HomeController">
+  <ons-toolbar id="h-head-toolbar" class="toolbar toolbar--material ">
+      <div class="toolbar--material__left left">
+        Skill List
+      </div>
+      <div class="toolbar--material__right right">
+        <ons-toolbar-button ng-click='myNavigator.resetToPage("view/main.html")'><ons-icon icon="md-home" size="32px" style="color: #fff"></ons-icon></ons-toolbar-button>
+      </div>
+  </ons-toolbar>
 
-          <ons-toolbar>
-              <div class="center">{{labels.TITLE_HOME}}</div>
-              <div class="right">
-                  <ons-toolbar-button><ons-icon icon="ion-gear-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon></ons-toolbar-button>
-              </div>
-          </ons-toolbar>
+  <ons-bottom-toolbar id="h-foot-toolbar">
+    <div>
+      <p>powered by Angular.js + OnsenUI</p>
+      <p>hideyuki.kawamura(379) created @2017/08/20</p>
+    </div>
+  </ons-bottom-toolbar>
 
-          <div class="profile-card">
-              <img src="images/profile-image-01.png" class="profile-image">
-              <div class="profile-name">{{sharing.root_machine.name}}</div>
-              <div class="profile-desc">{{sharing.root_machine.comment}}</div>
-              <div class="profile-purcase_date">{{sharing.root_machine.purchace_date}}</div>
-          </div>
-
-          <ons-row>
-            <menu-button buttonlabel="AddRecord" action="move2functions('1')"></menu-button>
-            <menu-button buttonlabel="ViewRecords" action="move2functions('2')"></menu-button>
-            <menu-button buttonlabel="CheckState" action="move2functions('3')"></menu-button>
-          </ons-row>
-          <ons-row>
-            <menu-button buttonlabel="Switch" action="move2functions('4')"></menu-button>
-            <menu-button buttonlabel="Master" action="move2functions('5')"></menu-button>
-            <menu-button buttonlabel="MEMO" action="move2functions('6')"></menu-button>
-          </ons-row>
-
-          <ons-button modifier="quiet" ng-click='delete_all_records()'>DELETE ALL DATA(DANGEEEEEERRRR!!)</ons-button>
-
-      </ons-page>
-  </ons-template>
-
-  <!-- record一覧ページ -->
-  <ons-template id="view_record_header_page.html">
-      <ons-page ng-controller="ViewRecordHeaderController">
-
-        <ons-toolbar>
-            <div class="left"><ons-back-button>Back</ons-back-button></div>
-            <div class="center">{{labels.TITLE_HEADERS}}</div>
-            <div class="right">
-
-              <ons-toolbar-button> <!-- search filterを使用する -->
-                <ons-icon icon="search" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
-              </ons-toolbar-button>
-
-              <ons-toolbar-button>
-                <ons-icon icon="search" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
-              </ons-toolbar-button>
-
-              <ons-toolbar-button ng-click="">
-                <ons-icon icon="ion-trash-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
-              </ons-toolbar-button>
-
-            </div>
-        </ons-toolbar>
-
-        <ons-list id="header_page_list">
-          <ons-list-item modifier="chevron" class="item" ng-repeat="item in items_disp track by $index" ng-click="processItemSelect($index, $event)">
-              <ons-row>
-                <ons-col width="40px" class="mark_box">
-                    <label class='checkbox checkbox--list-item fade' ng-show="is_delete_phase" ng-click="$event.stopPropagation();">
-                        <input type='checkbox' checklist-model="del_targets.items" checklist-value="item.id"><div class='checkbox__checkmark checkbox--list-item__checkmark'></div>
-                    </label>
-                </ons-col>
-                  <ons-col class="header_page_list_title">
-                    <h2>{{item.title}}</h2>
-                  </ons-col>
-                  <ons-col class="header_page_list_others">
-                    {{item.opt1}}:{{item.opt2}}:{{item.opt3}}
-                  </ons-col>
-              </ons-row>
-          </ons-list-item>
-        </ons-list>
-
-        <div ng-show="is_delete_phase" class="page_under_area">
-            <ons-button ng-click="checkAll()">全選択</ons-button>
-            <ons-button ng-click="uncheckAll()">解除</ons-button>
-            <ons-button ng-click="deleteRecord()" ng-class="{bg_red: del.items.length > 0 }">削除<small>({{del.items.length}})</small></ons-button>
-        </div>
-
-      </ons-page>
-  </ons-template>
-
-  <!-- record詳細ページ -->
-  <ons-template id="view_record_detail_page.html">
-      <ons-page ng-controller="ViewRecordDetailController">
-
-        <ons-toolbar>
-            <div class="left"><ons-back-button>Back</ons-back-button></div>
-            <div class="center">{{labels.TITLE_DETAIL}}</div>
-        </ons-toolbar>
-
-        <ons-list>
-          <ons-list-item ng-repeat="item in properties" ng-hide="item.no_disp">
-            <ons-row>
-              <ons-col>{{item.label}}<span ng-show="item.required" class="required_mark">*</ons-col>
-              <ons-col>
-                <span ng-hide="is_view">
-                  <input ng-hide="item.not_normal" type="{{item.input_type}}" ng-model="record[item.name]" />
-                  <span ng-show="item.not_normal">
-                    <span ng-show="item.is_select">
-                      <ons-button ng-click="showSelectList(item.name)">選択</ons-button><span>{{record[item.name]}}</span>
-                    </span>
-                    <span ng-show="item.is_img">
-                        <div imagePickerDirective="item.imagePickerArgs"></div>
-                    </span>
-                  </span>
-                </span>
-                <span ng-show="is_view">
-                  <span ng-if="true">
-                    {{record[item.name]}}
-                  </span>
-                  <span ng-if="false">
-                    <img ng-src="{{item.url}}" />
-                  </span>
-                </span>
-              </ons-col>
-            </ons-row>
-          </ons-list-item>
-
-        <ons-button modifier="quiet large" ng-show="is_view" ng-click="move2RecordEdit()">{{labels.EDIT_BUTTON}}</ons-button>
-        <ons-button modifier="quiet large" ng-hide="is_view" ng-click="processRegist()">{{UPDATE_BUTTON_NAME}}</ons-button>
-        <ons-button modifier="large" ng-show="is_modify" ng-click="processDelete()">{{labels.DELETE_BUTTON}}</ons-button>
-
-      </ons-page>
-  </ons-template>
+  <div id="initial-screen">
+    <div>
+      <span>
+        Now Loading...
+      </span>
+      <svg class="progress-circular progress-circular--indeterminate">
+        <circle class="progress-circular__background"/>
+        <circle class="progress-circular__primary progress-circular--indeterminate__primary"/>
+        <circle class="progress-circular__secondary progress-circular--indeterminate__secondary"/>
+      </svg>
+    </div>
+  </div>
 
   <script src="js/class/IFRETURN.js"></script>
 
   <script src="cordova.js"></script>
-  <script src="js/main.js"></script>
 
   <script src="js/service/recordManageService.js"></script>
   <script src="js/service/masterManageService.js"></script>
@@ -228,6 +111,7 @@
   <script src="js/directive/imagePicker.js"></script>
   <script src="js/directive/menuButton.js"></script>
 
+  <script src="js/controller/rootController.js"></script>
   <script src="js/controller/homeController.js"></script>
   <script src="js/controller/recordController.js"></script>
   <script src="js/controller/selectListController.js"></script>
@@ -237,10 +121,11 @@
 
   <script>
   // angular drive!!
+  /*
   angular.element(document).ready(function () {
     angular.bootstrap(document, [APP_CONFIGS.NAME]);
   });
-
+  */
   </script>
 
 </body>

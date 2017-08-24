@@ -1,0 +1,47 @@
+<ons-page ng-controller="ViewRecordHeaderController">
+
+  <ons-toolbar>
+      <div class="left"><ons-back-button>Back</ons-back-button></div>
+      <div class="center">{{labels.TITLE_HEADERS}}</div>
+      <div class="right">
+
+        <ons-toolbar-button> <!-- search filterを使用する -->
+          <ons-icon icon="search" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
+        </ons-toolbar-button>
+
+        <ons-toolbar-button>
+          <ons-icon icon="search" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
+        </ons-toolbar-button>
+
+        <ons-toolbar-button ng-click="">
+          <ons-icon icon="ion-trash-a" style="vertical-align: -4px; font-size: 28px;"></ons-icon>
+        </ons-toolbar-button>
+
+      </div>
+  </ons-toolbar>
+
+  <ons-list id="header_page_list">
+    <ons-list-item modifier="chevron" class="item" ng-repeat="item in items_disp track by $index" ng-click="processItemSelect($index, $event)">
+        <ons-row>
+          <ons-col width="40px" class="mark_box">
+              <label class='checkbox checkbox--list-item fade' ng-show="is_delete_phase" ng-click="$event.stopPropagation();">
+                  <input type='checkbox' checklist-model="del_targets.items" checklist-value="item.id"><div class='checkbox__checkmark checkbox--list-item__checkmark'></div>
+              </label>
+          </ons-col>
+            <ons-col class="header_page_list_title">
+              <h2>{{item.title}}</h2>
+            </ons-col>
+            <ons-col class="header_page_list_others">
+              {{item.opt1}}:{{item.opt2}}:{{item.opt3}}
+            </ons-col>
+        </ons-row>
+    </ons-list-item>
+  </ons-list>
+
+  <div ng-show="is_delete_phase" class="page_under_area">
+      <ons-button ng-click="checkAll()">全選択</ons-button>
+      <ons-button ng-click="uncheckAll()">解除</ons-button>
+      <ons-button ng-click="deleteRecord()" ng-class="{bg_red: del.items.length > 0 }">削除<small>({{del.items.length}})</small></ons-button>
+  </div>
+
+</ons-page>
